@@ -20,8 +20,4 @@ app.set("view engine", "ejs");
 
 app.use("/", api);
 
-// app.get("/", authController.renderAuthPage);
-
-// app.use("/auth", authRoutes);
-
 module.exports = app;

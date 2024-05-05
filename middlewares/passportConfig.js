@@ -1,8 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
-const GOOGLE_CLIENT_ID =
-  "202609907246-8osb327rgiu6oaqa2ivjl3me3gf08mfk.apps.googleusercontent.com";
-const GOOGLE_CLIENT_SECRET = "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";
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 
 passport.use(
   new GoogleStrategy(
@@ -25,3 +24,5 @@ passport.serializeUser(function (user, cb) {
 passport.deserializeUser(function (obj, cb) {
   cb(null, obj);
 });
+
+module.exports = passport;

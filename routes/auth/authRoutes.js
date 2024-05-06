@@ -20,11 +20,8 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/error" }),
-  function (req, res) {
-    // Successful authentication, redirect success.
-    res.redirect("/auth/success");
-  }
+  passport.authenticate("google", { session: false }),
+  authController.gogleCallbackHandler
 );
 
 module.exports = router;

@@ -12,7 +12,7 @@ exports.errorHandler = function (req, res) {
   res.send("error logging in");
 };
 
-exports.gogleCallbackHandler = async (req, res, next) => {
+exports.gogleCallbackHandler = async (req, res) => {
   try {
     console.log("inside google callback");
     const existingUser = await User.findOne({

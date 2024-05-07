@@ -11,8 +11,6 @@ exports.createBlog = async (req, res) => {
       content,
       user,
     });
-
-    // Save the blog post to the database
     await blog.save();
 
     res.status(201).json({ success: true, blog });
@@ -22,5 +20,6 @@ exports.createBlog = async (req, res) => {
 };
 
 exports.getBlog = async (req, res) => {
-  res.send("hello");
+  const blog = await Blog.find();
+  res.send(blog);
 };

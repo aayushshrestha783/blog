@@ -10,7 +10,6 @@ const blogController = require("../../controllers/blogController");
 
 router.get("/", blogController.getBlog);
 router.post("/", blogController.createBlog);
-
 module.exports = router;
 // router.get("/:id", artController.getArtById);
 

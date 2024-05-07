@@ -1,3 +1,4 @@
+const { valueOrDefault } = require("chart.js/helpers");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -7,7 +8,11 @@ const postSchema = new Schema({
   creationDate: { type: Date, default: Date.now },
   updateDate: { type: Date },
   likes: { type: Number, default: 0 },
-  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
 const Post = mongoose.model("Post", postSchema);

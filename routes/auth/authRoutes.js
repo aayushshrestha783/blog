@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const authController = require("../../controllers/googleAuthController");
-const passportConfig = require("../../middlewares/passportConfig");
 
 router.use(passport.initialize());
 router.use(passport.session());

@@ -38,8 +38,25 @@ const createBlog = async (req, res) => {
 
 //get all blog
 const getBlog = async (req, res) => {
-  const blog = await Blog.find();
-  res.send(blog);
+  try {
+    const blog = await Blog.find();
+    res.status(201).json({ success: true, blog });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+//get blog by id
+const getBlogById = async (req, res) => {
+  try {
+    const blog_id = req.params.blogID;
+    let blog = await Blog.findById(blog_id);
+    if (!blog) {
+      return res.status(404).json({ success: false, error: "Blog not found" });
+    }
+    res.status(201).json({ success: true, blog });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
 };
 
 //like habdler
@@ -106,7 +123,7 @@ const updateBlog = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
-
+//deleteBlog by Id
 const deleteBlog = async (req, res) => {
   try {
     const blog_id = req.params.blogID;
@@ -128,4 +145,5 @@ module.exports = {
   likeBlog,
   updateBlog,
   deleteBlog,
+  getBlogById,
 };

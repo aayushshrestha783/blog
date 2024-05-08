@@ -1,4 +1,3 @@
-const { valueOrDefault } = require("chart.js/helpers");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 

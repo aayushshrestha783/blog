@@ -2,22 +2,28 @@ const Blog = require("../models/Blog");
 const fs = require("fs");
 const throwError = require("../middlewares/throwError");
 
+//create blog
 const createBlog = async (req, res) => {
   console.log("inside createBlog");
   try {
     const { title, user } = req.body;
-    const { path } = req.file; // Path to the uploaded file
-    if (!req.file) {
+    let content;
+
+    if (req.file) {
+      // If a file has been uploaded, read its content
+      const { path } = req.file; // Path to the uploaded file
+      content = fs.readFileSync(path, "utf8");
+      // Delete the uploaded file after processing
+      fs.unlinkSync(path);
+    } else {
+      // If no file has been uploaded, use the title and user fields from the request body
+      content = req.body.content;
+    }
+    if (!content) {
       return res
         .status(400)
         .json({ success: false, error: "No file uploaded" });
     }
-    console.log(path);
-    // Read the content of the Markdown file
-    const content = fs.readFileSync(path, "utf8");
-    console.log(title);
-    console.log(content);
-    // Create a new blog post
     const blog = new Blog({
       title,
       content, // Store the Markdown content as a string
@@ -25,20 +31,19 @@ const createBlog = async (req, res) => {
     });
     await blog.save();
 
-    // Delete the uploaded file after processing
-    fs.unlinkSync(path);
-
     res.status(201).json({ success: true, blog });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 };
 
+//get all blog
 const getBlog = async (req, res) => {
   const blog = await Blog.find();
   res.send(blog);
 };
 
+//like habdler
 const likeBlog = async (req, res, next) => {
   try {
     const user_id = "66385c02227c9caf4b3d92e0";

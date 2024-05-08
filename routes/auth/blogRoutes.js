@@ -6,6 +6,11 @@ const blogController = require("../../controllers/blogController");
 
 router.get("/", blogController.getBlog);
 router.post("/", multerUploads.single("content"), blogController.createBlog);
+router.put(
+  "/:blogID",
+  multerUploads.single("content"),
+  blogController.updateBlog
+);
 
 //ROUTES RELATED TO LIKES
 

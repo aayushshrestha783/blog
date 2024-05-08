@@ -4,7 +4,6 @@ const throwError = require("../middlewares/throwError");
 
 //create blog
 const createBlog = async (req, res) => {
-  console.log("inside createBlog");
   try {
     const { title, user } = req.body;
     let content;
@@ -71,8 +70,46 @@ const likeBlog = async (req, res, next) => {
   }
 };
 
+//update blog
+const updateBlog = async (req, res) => {
+  try {
+    const blog_id = req.params.blogID;
+    const { title, user } = req.body;
+    let content;
+    // Find the blog post by ID
+    let blog = await Blog.findById(blog_id).exec();
+    if (!blog) {
+      return res.status(404).json({ success: false, error: "Blog not found" });
+    }
+    if (req.file) {
+      // If a file has been uploaded, read its content
+      const { path } = req.file; // Path to the uploaded file
+      content = fs.readFileSync(path, "utf8");
+      // Delete the uploaded file after processing
+      fs.unlinkSync(path);
+    } else {
+      // If no file has been uploaded, use the title and user fields from the request body
+      content = req.body.content;
+    }
+    if (!content) {
+      return res
+        .status(400)
+        .json({ success: false, error: "No file uploaded" });
+    }
+    blog.title = title;
+    blog.user = user;
+    blog.content = content;
+    await blog.save();
+
+    res.status(201).json({ success: true, blog });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
 module.exports = {
   getBlog,
   createBlog,
   likeBlog,
+  updateBlog,
 };

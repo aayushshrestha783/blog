@@ -11,6 +11,7 @@ router.put(
   multerUploads.single("content"),
   blogController.updateBlog
 );
+router.delete("/:blogID", blogController.deleteBlog);
 
 //ROUTES RELATED TO LIKES
 

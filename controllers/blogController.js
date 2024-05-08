@@ -107,9 +107,25 @@ const updateBlog = async (req, res) => {
   }
 };
 
+const deleteBlog = async (req, res) => {
+  try {
+    const blog_id = req.params.blogID;
+    const deletedBlog = await Blog.findByIdAndDelete(blog_id).exec();
+    if (!deletedBlog) {
+      return res.status(404).json({ success: false, error: "Blog not found" });
+    }
+    res
+      .status(200)
+      .json({ success: true, message: "Blog deleted successfully" });
+  } catch {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
 module.exports = {
   getBlog,
   createBlog,
   likeBlog,
   updateBlog,
+  deleteBlog,
 };

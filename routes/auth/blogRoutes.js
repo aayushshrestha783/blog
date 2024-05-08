@@ -4,12 +4,11 @@ const router = express.Router();
 
 const blogController = require("../../controllers/blogController");
 
-//TODO: ADD AUTH MIDDLEWARE AND MANAGE ROLE PERMISSIONS
-
-// ROUTES RELATED TO ART
-
 router.get("/", blogController.getBlog);
-//router.post("/", blogController.createBlog);
 router.post("/", multerUploads.single("content"), blogController.createBlog);
+
+//ROUTES RELATED TO LIKES
+
+router.post("/:blogID/like", blogController.likeBlog);
 
 module.exports = router;

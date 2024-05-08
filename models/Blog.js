@@ -7,7 +7,17 @@ const postSchema = new Schema({
   content: { type: String, required: true },
   creationDate: { type: Date, default: Date.now },
   updateDate: { type: Date },
-  likes: { type: Number, default: 0 },
+  likes: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+  likedBy: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   user: {
     type: Schema.Types.ObjectId,
     ref: "User",

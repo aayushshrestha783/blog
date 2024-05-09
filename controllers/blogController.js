@@ -58,6 +58,21 @@ const getBlogById = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+//get blog by user_id
+const getBlogByUserId = async (req, res) => {
+  try {
+    const user_id = req.params.userID;
+    let blog = await Blog.find({ user: user_id });
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ success: false, error: "No blog posted by user" });
+    }
+    res.status(201).json({ success: true, blog });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
 
 //like habdler
 const likeBlog = async (req, res, next) => {
@@ -146,4 +161,5 @@ module.exports = {
   updateBlog,
   deleteBlog,
   getBlogById,
+  getBlogByUserId,
 };

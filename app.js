@@ -25,4 +25,9 @@ app.set("view engine", "ejs");
 
 app.use("/", api);
 
+// Catch-all route for unknown API routes
+app.use((req, res) => {
+  res.status(404).json({ error: "Not Found" });
+});
+
 module.exports = app;

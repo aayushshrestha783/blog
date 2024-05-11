@@ -16,17 +16,17 @@ exports.gogleCallbackHandler = async (req, res) => {
   try {
     console.log("inside google callback");
     const existingUser = await User.findOne({
-      email: userProfile.emails[0].value,
+      email: userProfile._json.email,
     });
     console.log(userProfile._json.email);
     if (existingUser) {
-      res.send("existing User");
+      res.render("pages/success");
     } else {
       const newUser = await User.create({
         email: userProfile._json.email,
         name: userProfile._json.name,
       });
-      res.send("new_user_created");
+      res.render("pages/success");
     }
   } catch (error) {
     res.send(error);

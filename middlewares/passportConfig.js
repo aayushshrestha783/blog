@@ -13,7 +13,7 @@ passport.use(
     function (accessToken, refreshToken, profile, done) {
       console.log(accessToken);
       userProfile = profile;
-      return done(null, userProfile);
+      return done(null, userProfile); // Pass both tokens
     }
   )
 );

@@ -11,9 +11,12 @@ passport.use(
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
     function (accessToken, refreshToken, profile, done) {
-      console.log(accessToken);
-      userProfile = profile;
-      return done(null, userProfile); // Pass both tokens
+      const user = {
+        profile: profile,
+        refreshToken: refreshToken,
+        accessToken: accessToken,
+      };
+      return done(null, user); // Pass both tokens
     }
   )
 );

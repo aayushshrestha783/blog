@@ -40,4 +40,6 @@ router.get("/success", authController.successHandler);
 
 router.get("/error", authController.errorHandler);
 
+router.get("/logout", authController.logout);
+
 module.exports = router;

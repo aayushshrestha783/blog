@@ -28,3 +28,7 @@ exports.successHandler = async function (req, res) {
 exports.errorHandler = function (req, res) {
   res.send("error logging in");
 };
+
+exports.logout = function (req, res) {
+  res.redirect("/auth");
+};

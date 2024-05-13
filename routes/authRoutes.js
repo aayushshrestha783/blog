@@ -3,10 +3,13 @@ const session = require("express-session");
 const router = express.Router();
 const passport = require("../middlewares/passportConfig");
 const authController = require("../controllers/googleAuthController");
-
-function isLoggedIn(req, res, next) {
-  req.user ? next() : res.sendStatus(401);
-}
+const {
+  isLoggedIn,
+  isAuthenticated,
+} = require("../middlewares/authMiddleware");
+// function isLoggedIn(req, res, next) {
+//   req.user ? next() : res.status(401);
+// }
 
 router.use(
   session({

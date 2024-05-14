@@ -5,13 +5,6 @@ const passport = require("../middlewares/passportConfig");
 const authController = require("../controllers/googleAuthController");
 const { isAuthenticated } = require("../middlewares/authMiddleware");
 
-router.use(
-  session({
-    secret: process.env.sessionSecret,
-    resave: false,
-    saveUninitialized: true,
-  })
-);
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -35,7 +28,7 @@ router.get("/", authController.renderAuthPage);
 
 router.get("/success", isAuthenticated, authController.successHandler);
 
-router.get("/error", authController.errorHandler);
+router.get("/error", isAuthenticated, authController.errorHandler);
 
 router.get("/logout", authController.logout);
 

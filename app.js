@@ -1,9 +1,6 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
-const session = require("express-session");
-const passport = require("passport");
-const multerConfig = require("./middlewares/multerConfig");
 const api = require("./routes/api");
 app.set("view engine", "ejs");
 

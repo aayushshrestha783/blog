@@ -74,7 +74,7 @@ const getBlogByUserId = async (req, res) => {
   }
 };
 
-//like habdler
+//like handler
 const likeBlog = async (req, res, next) => {
   try {
     const user_id = "66385c02227c9caf4b3d92e0";

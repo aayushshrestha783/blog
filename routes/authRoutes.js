@@ -3,13 +3,7 @@ const session = require("express-session");
 const router = express.Router();
 const passport = require("../middlewares/passportConfig");
 const authController = require("../controllers/googleAuthController");
-const {
-  isLoggedIn,
-  isAuthenticated,
-} = require("../middlewares/authMiddleware");
-// function isLoggedIn(req, res, next) {
-//   req.user ? next() : res.status(401);
-// }
+const { isAuthenticated } = require("../middlewares/authMiddleware");
 
 router.use(
   session({
@@ -39,7 +33,7 @@ router.get(
 );
 router.get("/", authController.renderAuthPage);
 
-router.get("/success", authController.successHandler);
+router.get("/success", isAuthenticated, authController.successHandler);
 
 router.get("/error", authController.errorHandler);
 

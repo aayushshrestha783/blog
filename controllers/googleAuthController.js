@@ -29,6 +29,20 @@ exports.errorHandler = function (req, res) {
   res.send("error logging in");
 };
 
-exports.logout = function (req, res) {
-  res.redirect("/auth");
+exports.logout = function (req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      console.error("Error logging out:", err);
+      return next(err); // Pass error to middleware for proper handling
+    }
+    req.session.destroy((err) => {
+      if (err) {
+        console.error("Error destroying session:", err);
+        return res
+          .status(500)
+          .send("An error occurred during logout. Please try again.");
+      }
+      res.redirect("/auth"); // Redirect to the login page after successful logout
+    });
+  });
 };

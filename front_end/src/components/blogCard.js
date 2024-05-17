@@ -2,7 +2,7 @@ import React from "react";
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
-const ArtCard = ({ card }) => {
+const BlogCard = ({ card }) => {
   return (
     <div className="translate-y-0 overflow-hidden rounded-xl border bg-white transition-all hover:-translate-y-2">
       {/* Image Container */}
@@ -18,10 +18,7 @@ const ArtCard = ({ card }) => {
       <div className="space-y-5 p-5">
         <div className="space-y-2">
           <div className="flex justify-between space-x-2"></div>
-          <p>
-            Beautifully crafted Kumari art by one of the finest artists in the
-            town.
-          </p>
+          <p>blog is a blog</p>
         </div>
         {
           <div className="flex items-center space-x-5">
@@ -34,4 +31,4 @@ const ArtCard = ({ card }) => {
   );
 };
 
-export default ArtCard;
+export default BlogCard;

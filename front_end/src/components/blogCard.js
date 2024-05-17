@@ -19,11 +19,13 @@ const BlogCard = ({ card }) => {
       {/* Details Container */}
       <div className="space-y-4 p-1">
         <div className="space-y-2">
-          <div className="flex justify-between space-x-2"></div>
-          <LikeButton />
+          <div className="flex item-center space-x-5">
+            <LikeButton />
+            <p className="text-blue-500">300 likes</p>
+          </div>
         </div>
 
-        <div className="flex items-center space-x-5">
+        <div className="flex items-baseline space-x-5">
           <p className="text-blue-500">By Aayush.</p>
         </div>
       </div>

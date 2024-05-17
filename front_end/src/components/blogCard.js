@@ -1,4 +1,6 @@
 import React from "react";
+import LikeButton from "./likeButton";
+
 import { Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -15,17 +17,15 @@ const BlogCard = ({ card }) => {
       </div>
 
       {/* Details Container */}
-      <div className="space-y-5 p-5">
+      <div className="space-y-4 p-1">
         <div className="space-y-2">
           <div className="flex justify-between space-x-2"></div>
-          <p>blog is a blog</p>
+          <LikeButton />
         </div>
-        {
-          <div className="flex items-center space-x-5">
-            <div className="h-[40px] w-[40px] rounded-full bg-slate-200"></div>
-            <p>By Aayush.</p>
-          </div>
-        }
+
+        <div className="flex items-center space-x-5">
+          <p className="text-blue-500">By Aayush.</p>
+        </div>
       </div>
     </div>
   );

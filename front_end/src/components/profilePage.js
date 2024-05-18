@@ -3,6 +3,31 @@ import ProfileBlogCard from "./profileBlogCard"; // Import your ProfileBlogCard 
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "./Icons"; // Import icons
 
 const ProfilePage = () => {
+  const cardData = [
+    {
+      id: 1,
+      title: "Mastering React Hooks: A Comprehensive Guide",
+      description: "Learn how to use React Hooks in your projects.",
+      views: 1200,
+      likes: 300,
+    },
+    {
+      id: 2,
+      title: "Unleashing the Power of CSS Grid: A Step-by-Step Guide",
+      description: "A detailed guide on using CSS Grid.",
+      views: 900,
+      likes: 250,
+    },
+    {
+      id: 3,
+      title: "Optimizing Website Performance: Techniques and Best Practices",
+      description: "Tips and tricks for optimizing your website.",
+      views: 1500,
+      likes: 400,
+    },
+    // Add more card data as needed
+  ];
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
       {/* Profile Section */}
@@ -50,7 +75,7 @@ const ProfilePage = () => {
         </div>
       </div>
       {/* Blog Posts Section */}
-      {/* <div className="space-y-6">
+      <div className="space-y-6">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-bold">My Blog Posts</h2>
           <div className="flex items-center gap-2">
@@ -63,9 +88,11 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <ProfileBlogCard />
+          {cardData.map((card) => (
+            <ProfileBlogCard key={card.id} card={card} />
+          ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 };

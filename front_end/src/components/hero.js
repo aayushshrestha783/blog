@@ -1,5 +1,5 @@
 import React from "react";
-import BlogCard from "./blogCard"; // Import your ArtCard component
+import BlogCard from "./blogCard"; // Import your BlogCard component
 
 const cardData = [
   {
@@ -8,7 +8,12 @@ const cardData = [
       regular:
         "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
     },
-    user: { first_name: "Artist1" },
+    title: "Mastering React Hooks: A Comprehensive Guide",
+    author: "John Doe",
+    authorAvatar: "/placeholder.svg", // Add proper image URL
+    date: "May 18, 2024",
+    likes: 120,
+    views: 2300,
   },
   {
     id: 2,
@@ -16,7 +21,12 @@ const cardData = [
       regular:
         "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
     },
-    user: { first_name: "Artist2" },
+    title: "Unleashing the Power of CSS Grid: A Step-by-Step Guide",
+    author: "Jane Smith",
+    authorAvatar: "/placeholder.svg",
+    date: "May 18, 2024",
+    likes: 80,
+    views: 1700,
   },
   {
     id: 3,
@@ -24,7 +34,12 @@ const cardData = [
       regular:
         "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
     },
-    user: { first_name: "Artist3" },
+    title: "Optimizing Website Performance: Techniques and Best Practices",
+    author: "Sarah Lee",
+    authorAvatar: "/placeholder.svg",
+    date: "May 18, 2024",
+    likes: 100,
+    views: 2100,
   },
   // Add more card data as needed
 ];
@@ -39,8 +54,7 @@ const Hero = () => {
         <p className="text-lg sm:text-xl mb-8">
           Discover amazing content about various topics.
         </p>
-        {/* Render BlogCard components here */}
-        <div className="flex flex-wrap justify-center gap-8">
+        <div className="container grid gap-8 px-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {cardData.map((card) => (
             <BlogCard key={card.id} card={card} />
           ))}

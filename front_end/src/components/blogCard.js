@@ -1,32 +1,48 @@
 import React from "react";
 import LikeButton from "./likeButton";
-
-import { Heart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { HeartIcon, EyeIcon } from "./Icons"; // Assume you have these icons in a separate file
 
 const BlogCard = ({ card }) => {
   return (
-    <div className="translate-y-0 overflow-hidden rounded-xl border bg-white transition-all hover:-translate-y-2">
-      {/* Image Container */}
-      <div className="h-[200px] w-full bg-slate-100">
-        <img
-          src={card.urls.regular}
-          alt={card.id}
-          className="h-[100%] w-[100%] object-cover"
-        />
-      </div>
-
-      {/* Details Container */}
-      <div className="space-y-4 p-1">
-        <div className="space-y-2">
-          <div className="flex item-center space-x-5">
-            <LikeButton />
-            <p className="text-blue-500">300 likes</p>
+    <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-800">
+      <img
+        alt="Blog Post Image"
+        className="aspect-[3/2] w-full rounded-t-lg object-cover"
+        height="200"
+        src={card.urls.regular}
+        width="300"
+      />
+      <div className="p-4">
+        <h3 className="text-lg font-semibold group-hover:underline">
+          {card.title}
+        </h3>
+        <div className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center">
+            <img
+              alt="Author Avatar"
+              className="mr-2 h-6 w-6 rounded-full"
+              height={24}
+              src={card.authorAvatar}
+              style={{
+                aspectRatio: "24/24",
+                objectFit: "cover",
+              }}
+              width={24}
+            />
+            <span>{card.author}</span>
           </div>
+          <span className="mx-2">•</span>
+          <span>{card.date}</span>
         </div>
-
-        <div className="flex items-baseline space-x-5">
-          <p className="text-blue-500">By Aayush.</p>
+        <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+          <div className="flex items-center space-x-1">
+            <LikeButton className="mr-1 h-5 w-5" />
+            <span>{card.likes}</span>
+          </div>
+          <div className="flex items-center">
+            <EyeIcon className="mr-1 h-5 w-5" />
+            <span>{card.views}</span>
+          </div>
         </div>
       </div>
     </div>

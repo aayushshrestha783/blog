@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaRegHeart, FaHeart } from "react-icons/fa6";
+import { FaHeart } from "react-icons/fa";
 
 function LikeButton() {
   const [liked, setLiked] = useState(false);
@@ -10,12 +10,15 @@ function LikeButton() {
 
   return (
     <div onClick={handleClick} style={{ cursor: "pointer" }}>
-      {liked ? (
-        <FaHeart color="red" size="50" />
-      ) : (
-        <FaRegHeart color="grey" size="50" />
-      )}
+      <FaHeart
+        style={{
+          width: "24px",
+          height: "24px",
+          color: liked ? "red" : "gray", // Both border and fill color are red when liked
+        }}
+      />
     </div>
   );
 }
+
 export default LikeButton;

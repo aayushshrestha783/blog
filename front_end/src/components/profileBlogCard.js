@@ -13,12 +13,12 @@ const ProfileBlogCard = ({ card }) => {
           </p>
         </div>
       </div>
-      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 px-6 mb-2">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 px-6 ">
+        <div className="flex items-center gap-1">
           <EyeIcon className="h-4 w-4" />
           <span>{card.views}</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <HeartIcon className="h-4 w-4" />
           <span>{card.likes}</span>
         </div>

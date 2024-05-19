@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Hero from "./components/hero";
+import AuthPage from "./components/authPage";
 import ProfilePage from "./components/profilePage"; // Import the ProfilePage component
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
         <Header />
         <div className="flex-grow">
           <Routes>
-            <Route path="/" element={<Hero />} />
+            <Route path="/" element={<AuthPage />} />
+            <Route path="/home" element={<Hero />} />
             <Route path="/profile" element={<ProfilePage />} />
             {/* Add more routes as needed */}
           </Routes>

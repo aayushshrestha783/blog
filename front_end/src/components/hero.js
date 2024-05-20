@@ -1,5 +1,6 @@
 import React from "react";
 import BlogCard from "./blogCard"; // Import your BlogCard component
+import { Link } from "react-router-dom";
 
 const cardData = [
   {
@@ -56,7 +57,9 @@ const Hero = () => {
         </p>
         <div className="container grid gap-8 px-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {cardData.map((card) => (
-            <BlogCard key={card.id} card={card} />
+            <Link key={card.id} to={`/about`}>
+              <BlogCard card={card} />
+            </Link>
           ))}
         </div>
       </div>

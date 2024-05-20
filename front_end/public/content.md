@@ -1,4 +1,4 @@
-# Introduction to React
+### Introduction to React
 
 React is a popular JavaScript library for building user interfaces, developed by Facebook. It allows developers to create interactive and dynamic web applications with ease.
 

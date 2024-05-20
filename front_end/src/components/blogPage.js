@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
-//import { Input } from "@/components/ui/input";
+import { SearchIcon } from "./Icons";
 
 export default function Component() {
   return (
     <>
-      <div className="container mx-auto grid grid-cols-1 gap-8 py-8 md:grid-cols-[3fr_1fr]">
-        <main>
-          <article className="space-y-4 px-15">
+      <div className="container mx-auto grid grid-cols-1 gap-898 py-8 md:grid-cols-[3fr_1fr]">
+        <main className="px-10 ">
+          <article className="space-y-4 ">
             <h1 className="text-3xl font-bold">
               The Importance of Mindfulness in Daily Life
             </h1>
@@ -15,7 +15,7 @@ export default function Component() {
               <span className="mx-2">•</span>
               <span>May 18, 2024</span>
             </div>
-            <div className="prose prose-gray max-w-none dark:prose-invert">
+            <div className="text-justify">
               <p>
                 In today's fast-paced world, it's easy to get caught up in the
                 constant hustle and bustle of daily life. We're often so focused
@@ -58,14 +58,20 @@ export default function Component() {
             </div>
           </article>
         </main>
-        <aside className="space-y-6">
-          <div>
-            <h2 className="mb-2 text-lg font-bold">Search</h2>
+        <aside className="space-y-2">
+          <h2 className="mb-2 text-lg font-bold">Search</h2>
+          <div className="relative">
             <input
-              className="w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 pr-10"
               placeholder="Search blog posts..."
               type="text"
             />
+            <button
+              className="absolute right-2 top-1/2 transform -translate-y-1/2"
+              type="button"
+            >
+              <SearchIcon />
+            </button>
           </div>
           <div>
             <h2 className="mb-2 text-lg font-bold">Recent Posts</h2>

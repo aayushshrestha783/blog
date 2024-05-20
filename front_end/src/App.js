@@ -4,6 +4,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import Hero from "./components/hero";
 import AuthPage from "./components/authPage";
+import About from "./components/blogPage";
 import ProfilePage from "./components/profilePage"; // Import the ProfilePage component
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Routes>
             <Route path="/" element={<AuthPage />} />
             <Route path="/home" element={<Hero />} />
+            <Route path="/about" element={<About />} />
             <Route path="/profile" element={<ProfilePage />} />
             {/* Add more routes as needed */}
           </Routes>

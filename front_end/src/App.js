@@ -1,13 +1,12 @@
 // App.jsx
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./components/header";
-import Footer from "./components/footer";
 import Hero from "./components/hero";
 import AuthPage from "./components/authPage";
 import About from "./components/blogPage";
 import ProfilePage from "./components/profilePage";
 import Layout from "./components/Layout";
+import NotFound from "./components/Error";
 function App() {
   return (
     <BrowserRouter>
@@ -21,6 +20,7 @@ function App() {
           <Route path="/profile" element={<ProfilePage />} />
         </Route>
         {/* Error route for unknown paths */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

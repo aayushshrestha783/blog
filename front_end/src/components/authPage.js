@@ -3,7 +3,7 @@ import { FcGoogle } from "react-icons/fc";
 
 function SignInPage() {
   return (
-    <div className="flex h-screen w-full items-center justify-center bg-gradient-to-br from-gray-100 to-gray-300 dark:from-gray-800 dark:to-gray-900">
+    <div className="flex h-screen w-full items-center justify-center bg-white">
       <div className="max-w-md w-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
           Welcome to Our Blog

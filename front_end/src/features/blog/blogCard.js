@@ -1,6 +1,7 @@
 import React from "react";
 import LikeButton from "../../components/likeButton";
-import { HeartIcon, EyeIcon } from "../../components/Icons"; // Assume you have these icons in a separate file
+import { HeartIcon, EyeIcon } from "../../components//Icons"; // Assume you have these icons in a separate file
+import { Link } from "react-router-dom";
 
 const BlogCard = ({ card }) => {
   return (

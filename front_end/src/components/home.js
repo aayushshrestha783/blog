@@ -45,7 +45,7 @@ const cardData = [
   // Add more card data as needed
 ];
 
-const Hero = () => {
+const Home = () => {
   return (
     <div className="bg-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col">
       <div className="max-w-7xl mx-auto flex-grow">
@@ -67,4 +67,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default Home;

@@ -1,5 +1,6 @@
 // googleAuthController.js
 const User = require("../models/User");
+
 exports.renderAuthPage = function (req, res) {
   res.render("pages/auth");
 };
@@ -11,17 +12,15 @@ exports.successHandler = async function (req, res) {
       email: userProfile._json.email,
     });
     console.log(userProfile._json.email);
-    if (existingUser) {
-      res.render("pages/success", { user: req.user });
-    } else {
+    if (!existingUser) {
       await User.create({
         email: userProfile._json.email,
         name: userProfile._json.name,
       });
-      res.render("pages/success", { user: req.user });
     }
+    res.redirect(302, "http://localhost:3006/home");
   } catch (error) {
-    res.send(error);
+    res.status(500).send(error);
   }
 };
 

@@ -41,7 +41,7 @@ exports.logout = function (req, res, next) {
           .status(500)
           .send("An error occurred during logout. Please try again.");
       }
-      res.redirect("/auth"); // Redirect to the login page after successful logout
+      res.redirect(302, "http://localhost:3006"); // Redirect to the login page after successful logout
     });
   });
 };

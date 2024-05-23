@@ -29,6 +29,14 @@ const Header = () => {
               Profile
             </Link>
           </li>
+          <li>
+            <Link
+              to="http://localhost:3000/auth/logout"
+              className="text-white hover:text-gray-200"
+            >
+              Logout
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>

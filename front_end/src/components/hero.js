@@ -1,5 +1,5 @@
 import React from "react";
-import BlogCard from "./blogCard"; // Import your BlogCard component
+import BlogCard from "../features/blog/blogCard"; // Import your BlogCard component
 import { Link } from "react-router-dom";
 
 const cardData = [

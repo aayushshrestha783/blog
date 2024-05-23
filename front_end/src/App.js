@@ -2,11 +2,12 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Hero from "./components/hero";
-import AuthPage from "./components/authPage";
-import About from "./components/blogPage";
-import ProfilePage from "./components/profilePage";
+import AuthPage from "../src/features/auth/authPage";
+import About from "../src/features/blog/blogPage";
+import ProfilePage from "../src/features/profile/profilePage";
 import Layout from "./components/Layout";
 import NotFound from "./components/Error";
+import PostBlog from "./features/blog/postBlog";
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +19,7 @@ function App() {
           <Route path="/home" element={<Hero />} />
           <Route path="/about" element={<About />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/postBlog" element={<PostBlog />} />
         </Route>
         {/* Error route for unknown paths */}
         <Route path="*" element={<NotFound />} />

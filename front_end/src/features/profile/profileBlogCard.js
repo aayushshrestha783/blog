@@ -1,6 +1,6 @@
 // ProfileBlogCard.jsx
 import React from "react";
-import { HeartIcon, EyeIcon } from "./Icons";
+import { HeartIcon, EyeIcon } from "../../components/Icons";
 
 const ProfileBlogCard = ({ card }) => {
   return (

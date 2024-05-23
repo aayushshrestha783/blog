@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { SearchIcon } from "./Icons";
+import { SearchIcon } from "../../components/Icons";
 import Markdown from "react-markdown";
 import { useEffect, useState } from "react";
 

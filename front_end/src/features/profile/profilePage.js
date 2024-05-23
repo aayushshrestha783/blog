@@ -1,6 +1,6 @@
 import React from "react";
 import ProfileBlogCard from "./profileBlogCard"; // Import your ProfileBlogCard component
-import { TwitterIcon, LinkedinIcon, GithubIcon } from "./Icons"; // Import icons
+import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; // Import icons
 
 const ProfilePage = () => {
   const cardData = [

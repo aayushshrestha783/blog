@@ -1,6 +1,7 @@
 // ProfileBlogCard.jsx
 import React from "react";
 import { HeartIcon, EyeIcon } from "../../components/Icons";
+import { Link } from "react-router-dom";
 
 const ProfileBlogCard = ({ card }) => {
   return (

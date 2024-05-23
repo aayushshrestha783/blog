@@ -1,6 +1,7 @@
 import React from "react";
 import ProfileBlogCard from "./profileBlogCard"; // Import your ProfileBlogCard component
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; // Import icons
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
   const cardData = [
@@ -80,7 +81,7 @@ const ProfilePage = () => {
           <h2 className="text-2xl font-bold">My Blog Posts</h2>
           <div className="flex items-center gap-2">
             <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-              Create New
+              <Link to={`/postBlog`}>Post Blog</Link>
             </button>
             <button className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md">
               Edit Profile

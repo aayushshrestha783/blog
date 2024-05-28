@@ -1,4 +1,3 @@
-// ProfileBlogCard.jsx
 import React from "react";
 import { HeartIcon, EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
@@ -6,19 +5,13 @@ import { Link } from "react-router-dom";
 const ProfileBlogCard = ({ card }) => {
   return (
     <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-200 dark:hover:bg-gray-100 flex flex-col h-full">
-      <img
-        alt="Blog Post Image"
-        className="aspect-[3/2] w-full rounded-t-lg object-cover"
-        height="200"
-        src={card.urls.regular}
-        width="300"
-      />
-      <div className="p-4">
-        <h3 className="text-lg font-semibold group-hover:underline">
-          <Link key={card.id} to={`/about`}>
-            {card.title}
-          </Link>
-        </h3>
+      <div className="flex flex-col flex-1 p-6">
+        <div className="flex-1 space-y-2">
+          <h3 className="text-lg font-semibold">{card.title}</h3>
+          <p className="text-gray-500 dark:text-gray-400 line-clamp-2">
+            {card.description}
+          </p>
+        </div>
       </div>
       <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 px-6 ">
         <div className="flex items-center gap-1">

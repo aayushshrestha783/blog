@@ -9,6 +9,10 @@ const ProfilePage = () => {
       id: 1,
       title: "Mastering React Hooks: A Comprehensive Guide",
       description: "Learn how to use React Hooks in your projects.",
+      urls: {
+        regular:
+          "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
+      },
       views: 1200,
       likes: 300,
     },
@@ -16,6 +20,10 @@ const ProfilePage = () => {
       id: 2,
       title: "Unleashing the Power of CSS Grid: A Step-by-Step Guide",
       description: "A detailed guide on using CSS Grid.",
+      urls: {
+        regular:
+          "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
+      },
       views: 900,
       likes: 250,
     },
@@ -23,6 +31,10 @@ const ProfilePage = () => {
       id: 3,
       title: "Optimizing Website Performance: Techniques and Best Practices",
       description: "Tips and tricks for optimizing your website.",
+      urls: {
+        regular:
+          "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
+      },
       views: 1500,
       likes: 400,
     },

@@ -22,6 +22,14 @@ const postSchema = new Schema({
     ref: "User",
     required: true,
   },
+  authorAvatar: {
+    type: String,
+  },
+  thumbnail: {
+    regular: {
+      type: String,
+    },
+  },
 });
 
 const Post = mongoose.model("Post", postSchema);

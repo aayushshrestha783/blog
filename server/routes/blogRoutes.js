@@ -16,14 +16,20 @@ router.get("/:blogID", isAuthenticated, blogController.getBlogById);
 // Routes for creating, updating, and deleting blogs
 router.post(
   "/",
-  isAuthenticated,
-  multerUploads.single("content"),
+
+  multerUploads.fields([
+    { name: "content", maxcount: 1 },
+    { name: "thumbnail", maxCount: 1 },
+  ]),
   blogController.createBlog
 );
 router.put(
   "/:blogID",
-  isAuthenticated,
-  multerUploads.single("content"),
+
+  multerUploads.fields([
+    { name: "content", maxcount: 1 },
+    { name: "thumbnail", maxCount: 1 },
+  ]),
   blogController.updateBlog
 );
 router.delete("/:blogID", isAuthenticated, blogController.deleteBlog);

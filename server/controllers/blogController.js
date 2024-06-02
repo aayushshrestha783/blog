@@ -37,7 +37,7 @@ const createBlog = async (req, res) => {
       title,
       content, // Store the Markdown content as a string
       user,
-      thumbnail,
+      thumbnail: { regular: thumbnail },
     });
     await blog.save();
 

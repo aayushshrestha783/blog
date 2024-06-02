@@ -6,6 +6,11 @@ const postSchema = new Schema({
   content: { type: String, required: true },
   creationDate: { type: Date, default: Date.now },
   updateDate: { type: Date },
+  thumbnail: {
+    regular: {
+      type: String,
+    },
+  },
   likes: {
     type: Number,
     default: 0,
@@ -24,11 +29,6 @@ const postSchema = new Schema({
   },
   authorAvatar: {
     type: String,
-  },
-  thumbnail: {
-    regular: {
-      type: String,
-    },
   },
 });
 

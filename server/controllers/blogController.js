@@ -1,19 +1,22 @@
 const Blog = require("../models/Blog");
 const fs = require("fs");
 const throwError = require("../middlewares/throwError");
+const cloudinary = require("../config/cloudinary_config");
 
 //create blog
 const createBlog = async (req, res) => {
   try {
     const { title, user } = req.body;
     let content;
+    let thumbnail;
+    console.log(req.files);
 
-    if (req.file) {
+    if (req.files.content) {
       // If a file has been uploaded, read its content
-      const { path } = req.file; // Path to the uploaded file
-      content = fs.readFileSync(path, "utf8");
+      const contentPath = req.files.content[0].path; // Path to the uploaded file
+      content = fs.readFileSync(contentPath, "utf8");
       // Delete the uploaded file after processing
-      fs.unlinkSync(path);
+      fs.unlinkSync(contentPath);
     } else {
       // If no file has been uploaded, use the title and user fields from the request body
       content = req.body.content;
@@ -23,10 +26,18 @@ const createBlog = async (req, res) => {
         .status(400)
         .json({ success: false, error: "No file uploaded" });
     }
+    if (req.files.thumbnail) {
+      const thumbnailPath = req.files.thumbnail[0].path;
+      const result = await cloudinary.uploader.upload(thumbnailPath);
+      thumbnail = result.secure_url;
+      console.log(thumbnail);
+      fs.unlinkSync(thumbnailPath);
+    }
     const blog = new Blog({
       title,
       content, // Store the Markdown content as a string
       user,
+      thumbnail,
     });
     await blog.save();
 

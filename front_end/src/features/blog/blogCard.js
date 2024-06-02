@@ -10,7 +10,7 @@ const BlogCard = ({ card }) => {
         alt="Blog Post Image"
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
         height="200"
-        src={card.urls.regular}
+        src={card.thumbnail.regular}
         width="300"
       />
       <div className="p-4">

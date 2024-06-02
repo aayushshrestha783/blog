@@ -5,7 +5,7 @@ const router = express.Router();
 const blogController = require("../controllers/blogController");
 const { isAuthenticated } = require("../middlewares/authMiddleware");
 // Routes for fetching blogs
-router.get("/", isAuthenticated, blogController.getBlog);
+router.get("/", blogController.getBlog);
 router.get(
   "/userPost/:userID",
   isAuthenticated,

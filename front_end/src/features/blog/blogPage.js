@@ -36,7 +36,7 @@ export default function Component() {
         <main className="px-20 ">
           <article className="space-y-4 ">
             <h1 className="text-3xl font-bold">
-              The Importance of Mindfulness in Daily Life
+              <span>{blog.title}</span>
             </h1>
             <div className="text-gray-500">
               {blog.author ? (

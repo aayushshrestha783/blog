@@ -11,7 +11,7 @@ router.get(
   isAuthenticated,
   blogController.getBlogByUserId
 );
-router.get("/:blogID", isAuthenticated, blogController.getBlogById);
+router.get("/:blogID", blogController.getBlogById);
 
 // Routes for creating, updating, and deleting blogs
 router.post(

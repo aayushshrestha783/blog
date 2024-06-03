@@ -17,7 +17,7 @@ const BlogCard = ({ card }) => {
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold group-hover:underline">
-          {card.title}
+          <Link to={`/blog/${card._id}`}>{card.title}</Link>
         </h3>
         <div className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center">

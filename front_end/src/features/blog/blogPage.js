@@ -1,16 +1,34 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { SearchIcon } from "../../components/Icons";
 import Markdown from "react-markdown";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { formatDate } from "../../components/DateFormatter";
 
 export default function Component() {
-  const [markdownContent, setMarkdownContent] = useState("");
+  const { blogId } = useParams();
+  const [blog, setBlog] = useState(null);
 
   useEffect(() => {
-    fetch("/content.md") // URL to your content.md file
-      .then((response) => response.text())
-      .then((text) => setMarkdownContent(text));
-  }, []);
+    const fetchContent = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/blog/${blogId}`
+        );
+        console.warn(response.data.blog.content);
+        setBlog(response.data.blog);
+      } catch (error) {
+        console.log("error fetching blogs: ", error);
+      }
+    };
+    fetchContent();
+  }, [blogId]);
+
+  if (!blog) {
+    return <div>Loading...</div>; // Show loading state while fetching data
+  }
+
+  const formatedDate = formatDate(blog.creationDate);
 
   return (
     <>
@@ -21,12 +39,18 @@ export default function Component() {
               The Importance of Mindfulness in Daily Life
             </h1>
             <div className="text-gray-500">
-              <span>By John Doe</span>
-              <span className="mx-2">•</span>
-              <span>May 18, 2024</span>
+              {blog.author ? (
+                <>
+                  <span>By {blog.author.name}</span>
+                  <span className="mx-2">•</span>
+                  <span>{formatedDate}</span>
+                </>
+              ) : (
+                <span>Author information is not available</span>
+              )}
             </div>
             <div className="text-justify">
-              <Markdown>{markdownContent}</Markdown>
+              <Markdown>{blog.content}</Markdown>
             </div>
           </article>
         </main>
@@ -49,27 +73,27 @@ export default function Component() {
             <h2 className="mb-2 text-lg font-bold">Recent Posts</h2>
             <ul className="space-y-2">
               <li>
-                <Link className="hover:underline" href="#">
+                <Link className="hover:underline" to="#">
                   The Benefits of Meditation
                 </Link>
               </li>
               <li>
-                <Link className="hover:underline" href="#">
+                <Link className="hover:underline" to="#">
                   How to Declutter Your Home
                 </Link>
               </li>
               <li>
-                <Link className="hover:underline" href="#">
+                <Link className="hover:underline" to="#">
                   The Power of Positive Thinking
                 </Link>
               </li>
               <li>
-                <Link className="hover:underline" href="#">
+                <Link className="hover:underline" to="#">
                   5 Healthy Habits to Adopt
                 </Link>
               </li>
               <li>
-                <Link className="hover:underline" href="#">
+                <Link className="hover:underline" to="#">
                   The Importance of Self-Care
                 </Link>
               </li>

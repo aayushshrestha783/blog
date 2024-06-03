@@ -3,7 +3,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./components/home";
 import AuthPage from "../src/features/auth/authPage";
-import About from "../src/features/blog/blogPage";
+import BlogPage from "../src/features/blog/blogPage";
 import ProfilePage from "../src/features/profile/profilePage";
 import Layout from "./components/Layout";
 import NotFound from "./components/Error";
@@ -17,7 +17,7 @@ function App() {
         {/* Layout applied to the following routes */}
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
+          <Route path="/blog/:blogId" element={<BlogPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/postBlog" element={<PostBlog />} />
         </Route>

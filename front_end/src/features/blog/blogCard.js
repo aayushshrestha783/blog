@@ -2,8 +2,10 @@ import React from "react";
 import LikeButton from "../../components/likeButton";
 import { HeartIcon, EyeIcon } from "../../components//Icons"; // Assume you have these icons in a separate file
 import { Link } from "react-router-dom";
+import { formatDate } from "../../components/DateFormatter";
 
 const BlogCard = ({ card }) => {
+  const formatedDate = formatDate(card.creationDate);
   return (
     <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-800">
       <img
@@ -33,7 +35,7 @@ const BlogCard = ({ card }) => {
             <span>{card.author}</span>
           </div>
           <span className="mx-2">•</span>
-          <span>{card.date}</span>
+          <span>{formatedDate}</span>
         </div>
         <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center space-x-1">

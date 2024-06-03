@@ -32,7 +32,7 @@ const BlogCard = ({ card }) => {
               }}
               width={24}
             />
-            <span>{card.author}</span>
+            <span>{card.author.name}</span>
           </div>
           <span className="mx-2">•</span>
           <span>{formatedDate}</span>

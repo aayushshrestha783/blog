@@ -50,7 +50,8 @@ const createBlog = async (req, res) => {
 //get all blog
 const getBlog = async (req, res) => {
   try {
-    const blog = await Blog.find();
+    const blog = await Blog.find().populate("author", "name");
+
     res.status(201).json({ success: true, blog });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

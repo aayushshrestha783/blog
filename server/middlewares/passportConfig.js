@@ -27,6 +27,7 @@ passport.use(
           await user.save();
         }
         const jwtPayload = { id: user._id, email: user.name };
+        console.log(jwtPayload);
         return done(null, jwtPayload);
       } catch (error) {
         return done(error, null);

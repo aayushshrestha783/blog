@@ -13,6 +13,7 @@ router.use(
     secret: process.env.sessionSecret,
     resave: false,
     saveUninitialized: true,
+    cookie: { secure: false },
   })
 );
 

@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Header = () => {
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const allCookies = Cookies.get();
+    //setUserId(id);
+    console.warn(allCookies);
+  }, []);
   return (
     <header className="bg-gray-800 py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
       <div className="flex items-center">

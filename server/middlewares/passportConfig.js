@@ -2,6 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+const User = require("../models/User");
 
 passport.use(
   new GoogleStrategy(
@@ -10,13 +11,26 @@ passport.use(
       clientSecret: GOOGLE_CLIENT_SECRET,
       callbackURL: "http://localhost:3000/auth/google/callback",
     },
-    function (accessToken, refreshToken, profile, done) {
-      const user = {
-        profile: profile,
-        refreshToken: refreshToken,
-        accessToken: accessToken,
-      };
-      return done(null, user); // Pass both tokens
+    async function (accessToken, refreshToken, profile, done) {
+      try {
+        let user = await User.findOne({ email: profile._json.email });
+        if (!user) {
+          user = await User.create({
+            name: profile._json.name,
+            email: profile._json.email,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          });
+        } else {
+          user.accessToken = accessToken;
+          user.refreshToken = refreshToken;
+          await user.save();
+        }
+        const jwtPayload = { id: user._id, email: user.name };
+        return done(null, jwtPayload);
+      } catch (error) {
+        return done(error, null);
+      }
     }
   )
 );

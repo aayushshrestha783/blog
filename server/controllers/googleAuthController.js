@@ -1,23 +1,31 @@
 // googleAuthController.js
 const User = require("../models/User");
+const { decryptToken } = require("../utils/encryption");
+const jwt = require("jsonwebtoken");
 
 exports.renderAuthPage = function (req, res) {
   res.render("pages/auth");
 };
 
+exports.handleGoogleCallback = function (req, res) {
+  const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
+
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+  });
+
+  res.redirect("/auth/success");
+};
+
 exports.successHandler = async function (req, res) {
   try {
-    const userProfile = req.user.profile;
-    const existingUser = await User.findOne({
-      email: userProfile._json.email,
-    });
-    console.log(userProfile._json.email);
-    if (!existingUser) {
-      await User.create({
-        email: userProfile._json.email,
-        name: userProfile._json.name,
-      });
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).send("User not found");
     }
+
     res.redirect(302, "http://localhost:3006/home");
   } catch (error) {
     res.status(500).send(error);
@@ -29,19 +37,14 @@ exports.errorHandler = function (req, res) {
 };
 
 exports.logout = function (req, res, next) {
-  req.logout((err) => {
+  res.clearCookie("token");
+  req.session.destroy((err) => {
     if (err) {
-      console.error("Error logging out:", err);
-      return next(err); // Pass error to middleware for proper handling
+      console.error("Error destroying session:", err);
+      return res
+        .status(500)
+        .send("An error occurred during logout. Please try again.");
     }
-    req.session.destroy((err) => {
-      if (err) {
-        console.error("Error destroying session:", err);
-        return res
-          .status(500)
-          .send("An error occurred during logout. Please try again.");
-      }
-      res.redirect(302, "http://localhost:3006"); // Redirect to the login page after successful logout
-    });
+    res.redirect(302, "http://localhost:3006");
   });
 };

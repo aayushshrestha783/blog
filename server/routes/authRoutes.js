@@ -1,5 +1,4 @@
 const express = require("express");
-const session = require("express-session");
 const router = express.Router();
 const passport = require("../middlewares/passportConfig");
 const authController = require("../controllers/googleAuthController");
@@ -20,9 +19,9 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    successRedirect: "/auth/success",
     failureRedirect: "/error",
-  })
+  }),
+  authController.handleGoogleCallback
 );
 router.get("/", authController.renderAuthPage);
 

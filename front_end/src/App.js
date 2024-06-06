@@ -18,7 +18,7 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/blog/:blogId" element={<BlogPage />} />
-          <Route path="/profile/:userId" element={<ProfilePage />} />
+          <Route path="/profile" element={<ProfilePage />} />
           <Route path="/postBlog" element={<PostBlog />} />
         </Route>
         {/* Error route for unknown paths */}

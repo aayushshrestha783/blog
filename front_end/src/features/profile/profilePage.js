@@ -1,45 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ProfileBlogCard from "./profileBlogCard"; // Import your ProfileBlogCard component
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; // Import icons
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 const ProfilePage = () => {
-  const cardData = [
-    {
-      id: 1,
-      title: "Mastering React Hooks: A Comprehensive Guide",
-      description: "Learn how to use React Hooks in your projects.",
-      urls: {
-        regular:
-          "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
-      },
-      views: 1200,
-      likes: 300,
-    },
-    {
-      id: 2,
-      title: "Unleashing the Power of CSS Grid: A Step-by-Step Guide",
-      description: "A detailed guide on using CSS Grid.",
-      urls: {
-        regular:
-          "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
-      },
-      views: 900,
-      likes: 250,
-    },
-    {
-      id: 3,
-      title: "Optimizing Website Performance: Techniques and Best Practices",
-      description: "Tips and tricks for optimizing your website.",
-      urls: {
-        regular:
-          "https://cdn.pixabay.com/photo/2012/07/26/20/55/barrels-52934_1280.jpg",
-      },
-      views: 1500,
-      likes: 400,
-    },
-    // Add more card data as needed
-  ];
+  const [user, setUser] = useState(null);
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (token) {
+      try {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map(function (c) {
+              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+            })
+            .join("")
+        );
+
+        const userData = JSON.parse(jsonPayload);
+        setUser(userData);
+        console.warn("User data:", userData); // Debugging line
+
+        const fetchBlogs = async () => {
+          try {
+            console.warn(userData.id); // Check if userData is available
+            const response = await axios.get(
+              `http://localhost:3000/blog/userPost/${userData.id}`
+            );
+            setBlogs(response.data.blog);
+            console.log(response.data.blog);
+          } catch (error) {
+            console.log("error fetching blogs: ", error);
+          }
+        };
+        fetchBlogs();
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    } else {
+      console.warn("No token found");
+    }
+  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
@@ -101,8 +109,8 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {cardData.map((card) => (
-            <ProfileBlogCard key={card.id} card={card} />
+          {blogs.map((blog) => (
+            <ProfileBlogCard key={blog._id} card={blog} />
           ))}
         </div>
       </div>

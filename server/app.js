@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.use(cors());
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser);
+app.use(cookieParser());
 
 app.set("view engine", "ejs");
 

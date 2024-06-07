@@ -25,17 +25,17 @@ const ProfilePage = () => {
         );
 
         const userData = JSON.parse(jsonPayload);
-        setUser(userData);
-        console.warn("User data:", userData); // Debugging line
 
         const fetchBlogs = async () => {
           try {
-            console.warn(userData.id); // Check if userData is available
+            const userResponse = await axios.get(
+              `http://localhost:3000/user/${userData.id}`
+            );
+            setUser(userResponse.data.user);
             const response = await axios.get(
               `http://localhost:3000/blog/userPost/${userData.id}`
             );
             setBlogs(response.data.blog);
-            console.log(response.data.blog);
           } catch (error) {
             console.log("error fetching blogs: ", error);
           }
@@ -48,7 +48,6 @@ const ProfilePage = () => {
       console.warn("No token found");
     }
   }, []);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
       {/* Profile Section */}
@@ -56,19 +55,18 @@ const ProfilePage = () => {
         <div className="flex items-center gap-4">
           <div className="h-20 w-20 rounded-full bg-gray-300"></div>
           <div className="space-y-1">
-            <h2 className="text-2xl font-bold">John Doe</h2>
+            <h2 className="text-2xl font-bold">
+              {user ? user.name : "Loading..."}
+            </h2>
             <p className="text-gray-500 dark:text-gray-400">
-              Software Engineer, Tech Blogger
+              {user ? user.occupation : "Loading..."}
             </p>
           </div>
         </div>
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">About</h3>
           <p className="text-gray-500 dark:text-gray-400">
-            John Doe is a passionate software engineer and tech blogger. He has
-            been writing about the latest trends and technologies in the
-            industry for the past 5 years. His blog posts are known for their
-            in-depth analysis and practical insights.
+            {user ? user.bio : "Loading..."}{" "}
           </p>
         </div>
         <div className="space-y-2">

@@ -26,7 +26,7 @@ passport.use(
           user.refreshToken = refreshToken;
           await user.save();
         }
-        const jwtPayload = { id: user._id, email: user.name };
+        const jwtPayload = { id: user._id, name: user.name };
         return done(null, jwtPayload);
       } catch (error) {
         return done(error, null);

@@ -16,7 +16,7 @@ const getUser = async (req, res) => {
 const getUserById = async (req, res) => {
   try {
     const user_id = req.params.userID;
-    let user = await User.findById(user_id);
+    let user = await User.findById(user_id).select("name bio occupation");
     if (!user) {
       return res.status(404).json({ success: false, error: "User not found" });
     }

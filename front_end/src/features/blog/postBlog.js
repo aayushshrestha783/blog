@@ -1,14 +1,88 @@
-import React from "react";
+import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 function PostBlog() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [thumbnail, setThumbnail] = useState(null);
+  const [markdownFile, setMarkdownFile] = useState(null);
+  const [error, setError] = useState("");
+
+  const handleThumbnailChange = (e) => {
+    setThumbnail(e.target.files[0]);
+  };
+
+  const handleMarkdownFileChange = (e) => {
+    setMarkdownFile(e.target.files[0]);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!title || (!content && !markdownFile)) {
+      setError("Please fill in all required fields");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("thumbnail", thumbnail);
+    formData.append("content", content);
+    if (markdownFile) {
+      formData.append("file", markdownFile);
+    }
+
+    try {
+      const token = Cookies.get("token");
+      let userId;
+      if (token) {
+        const base64Url = token.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+          atob(base64)
+            .split("")
+            .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+            .join("")
+        );
+
+        const userData = JSON.parse(jsonPayload);
+        userId = userData.user_id; // Ensure this matches the key used in the payload
+        formData.append("user", userId);
+        console.log(userId);
+      }
+
+      const response = await axios.post(
+        "http://localhost:3000/blog",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`, // Include the token in the request headers if needed
+          },
+        }
+      );
+
+      if (response.data.success) {
+        // Redirect or show success message
+        console.log("Blog post created successfully");
+      } else {
+        setError(response.data.error || "An error occurred");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
+  };
+
   return (
-    <div className="flex flex-col  items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col">
+    <div className="flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold mb-6 text-gray-900">
           Create New Blog Post
         </h1>
-        <form className="space-y-6">
+        {error && <div className="text-red-500">{error}</div>}
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
               className="block text-sm font-medium text-gray-700"
@@ -21,6 +95,8 @@ function PostBlog() {
               id="title"
               placeholder="Enter a title for your blog post"
               type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
           <div>
@@ -57,6 +133,7 @@ function PostBlog() {
                       id="file"
                       name="file"
                       type="file"
+                      onChange={handleThumbnailChange}
                     />
                   </label>
                   <p className="pl-1">or drag and drop</p>
@@ -77,6 +154,8 @@ function PostBlog() {
               id="content"
               placeholder="Write your blog post content here"
               rows={10}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
             />
           </div>
           <div>
@@ -105,14 +184,15 @@ function PostBlog() {
                 <div className="flex text-sm text-gray-600">
                   <label
                     className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
-                    htmlFor="file"
+                    htmlFor="markdownFile"
                   >
                     <span>Upload a file</span>
                     <input
                       className="sr-only"
-                      id="file"
-                      name="file"
+                      id="markdownFile"
+                      name="markdownFile"
                       type="file"
+                      onChange={handleMarkdownFileChange}
                     />
                   </label>
                   <p className="pl-1">or drag and drop</p>

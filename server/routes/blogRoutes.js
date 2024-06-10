@@ -14,8 +14,8 @@ router.post(
   "/",
 
   multerUploads.fields([
-    { name: "content", maxcount: 1 },
-    { name: "thumbnail", maxCount: 1 },
+    { name: "thumbnail", maxcount: 1 },
+    { name: "markdownFile", maxCount: 1 },
   ]),
   blogController.createBlog
 );
@@ -23,8 +23,8 @@ router.put(
   "/:blogID",
 
   multerUploads.fields([
-    { name: "content", maxcount: 1 },
-    { name: "thumbnail", maxCount: 1 },
+    { name: "thumbnail", maxcount: 1 },
+    { name: "markdownFile", maxCount: 1 },
   ]),
   blogController.updateBlog
 );

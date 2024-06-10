@@ -6,41 +6,43 @@ const cloudinary = require("../config/cloudinary_config");
 //create blog
 const createBlog = async (req, res) => {
   try {
-    const { title, user } = req.body;
+    const { title, author } = req.body;
     let content;
     let thumbnail;
-    console.log(req.files);
 
-    if (req.files.content) {
+    if (req.files && req.files.file) {
       // If a file has been uploaded, read its content
-      const contentPath = req.files.content[0].path; // Path to the uploaded file
+
+      const contentPath = req.files.file[0].path; // Path to the uploaded file
       content = fs.readFileSync(contentPath, "utf8");
+      console.log(content);
       // Delete the uploaded file after processing
       fs.unlinkSync(contentPath);
     } else {
-      // If no file has been uploaded, use the title and user fields from the request body
       content = req.body.content;
     }
+
     if (!content) {
       return res
         .status(400)
-        .json({ success: false, error: "No file uploaded" });
+        .json({ success: false, error: "Content is required" });
     }
-    if (req.files.thumbnail) {
+
+    if (req.files && req.files.thumbnail) {
       const thumbnailPath = req.files.thumbnail[0].path;
       const result = await cloudinary.uploader.upload(thumbnailPath);
       thumbnail = result.secure_url;
-      console.log(thumbnail);
       fs.unlinkSync(thumbnailPath);
     }
+
     const blog = new Blog({
       title,
       content, // Store the Markdown content as a string
-      user,
+      author,
       thumbnail: { regular: thumbnail },
     });
-    await blog.save();
 
+    await blog.save();
     res.status(201).json({ success: true, blog });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

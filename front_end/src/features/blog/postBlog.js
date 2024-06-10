@@ -51,10 +51,9 @@ function PostBlog() {
         );
 
         const userData = JSON.parse(jsonPayload);
-        console.log(userData);
-        userId = userData.user_id;
-        const uid = "663ba06f3a32414eb714fa7a"; // Ensure this matches the key used in the payload
-        formData.append("author", uid);
+        console.warn(userData);
+        userId = userData.user_id; // Ensure this matches the key used in the payload
+        formData.append("author", userData.id);
       }
 
       const response = await axios.post(

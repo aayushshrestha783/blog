@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -8,14 +7,18 @@ function PostBlog() {
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
   const [markdownFile, setMarkdownFile] = useState(null);
+  const [thumbnailMessage, setThumbnailMessage] = useState("");
+  const [markdownMessage, setMarkdownMessage] = useState("");
   const [error, setError] = useState("");
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
+    setThumbnailMessage("Thumbnail uploaded successfully");
   };
 
   const handleMarkdownFileChange = (e) => {
     setMarkdownFile(e.target.files[0]);
+    setMarkdownMessage("Markdown file uploaded successfully");
   };
 
   const handleSubmit = async (e) => {
@@ -31,7 +34,7 @@ function PostBlog() {
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
     if (markdownFile) {
-      formData.append("content", markdownFile);
+      formData.append("markdownFile", markdownFile);
     }
 
     try {
@@ -48,9 +51,9 @@ function PostBlog() {
         );
 
         const userData = JSON.parse(jsonPayload);
-        userId = userData.user_id; // Ensure this matches the key used in the payload
-        formData.append("user", userId);
-        console.log(userId);
+        userId = userData.user_id;
+        const uid = "663ba06f3a32414eb714fa7a"; // Ensure this matches the key used in the payload
+        formData.append("author", uid);
       }
 
       const response = await axios.post(
@@ -59,13 +62,12 @@ function PostBlog() {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`, // Include the token in the request headers if needed
+            Authorization: `Bearer ${token}`,
           },
         }
       );
 
       if (response.data.success) {
-        // Redirect or show success message
         console.log("Blog post created successfully");
       } else {
         setError(response.data.error || "An error occurred");
@@ -139,6 +141,9 @@ function PostBlog() {
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 <p className="text-xs text-gray-500">.png up to 1Mb</p>
+                {thumbnailMessage && (
+                  <p className="text-green-500 mt-2">{thumbnailMessage}</p>
+                )}
               </div>
             </div>
           </div>
@@ -161,7 +166,7 @@ function PostBlog() {
           <div>
             <label
               className="block text-sm font-medium text-gray-700"
-              htmlFor="file"
+              htmlFor="markdownFile"
             >
               Or, upload a Markdown File
             </label>
@@ -198,6 +203,9 @@ function PostBlog() {
                   <p className="pl-1">or drag and drop</p>
                 </div>
                 <p className="text-xs text-gray-500">.md files up to 10MB</p>
+                {markdownMessage && (
+                  <p className="text-green-500 mt-2">{markdownMessage}</p>
+                )}
               </div>
             </div>
           </div>

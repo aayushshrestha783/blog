@@ -31,7 +31,7 @@ function PostBlog() {
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
     if (markdownFile) {
-      formData.append("file", markdownFile);
+      formData.append("content", markdownFile);
     }
 
     try {

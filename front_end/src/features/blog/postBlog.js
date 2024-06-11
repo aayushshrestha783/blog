@@ -13,12 +13,12 @@ function PostBlog() {
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
-    setThumbnailMessage("Thumbnail uploaded successfully");
+    setThumbnailMessage(`${e.target.files[0].name} uploaded successfully`);
   };
 
   const handleMarkdownFileChange = (e) => {
     setMarkdownFile(e.target.files[0]);
-    setMarkdownMessage("Markdown file uploaded successfully");
+    setMarkdownMessage(`${e.target.files[0].name} uploaded successfully`);
   };
 
   const handleSubmit = async (e) => {
@@ -51,7 +51,7 @@ function PostBlog() {
         );
 
         const userData = JSON.parse(jsonPayload);
-        console.warn(userData);
+
         userId = userData.user_id; // Ensure this matches the key used in the payload
         formData.append("author", userData.id);
       }

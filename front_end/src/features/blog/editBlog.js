@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -11,15 +12,37 @@ function EditBlog() {
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [error, setError] = useState("");
 
+  const { blogId } = useParams();
+  const [blog, setBlog] = useState(null);
+
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/blog/${blogId}`
+        );
+        setBlog(response.data.blog);
+        setTitle(response.data.blog.title);
+        setContent(response.data.blog.content);
+      } catch (error) {
+        console.log("error fetching blogs: ", error);
+      }
+    };
+    fetchContent();
+  }, [blogId]);
+
+  if (!blog) {
+    return <div>Loading...</div>; // Show loading state while fetching data
+  }
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
-    setThumbnailMessage("Thumbnail uploaded successfully");
+    setThumbnailMessage(`${e.target.files[0].name} uploaded successfully`);
   };
 
   const handleMarkdownFileChange = (e) => {
     setMarkdownFile(e.target.files[0]);
     console.log(markdownFile);
-    setMarkdownMessage(`${e.target.files[0]} uploaded successfully`);
+    setMarkdownMessage(`${e.target.files[0].name} uploaded successfully`);
   };
 
   const handleSubmit = async (e) => {
@@ -56,8 +79,8 @@ function EditBlog() {
         formData.append("author", userData.id);
       }
 
-      const response = await axios.post(
-        "http://localhost:3000/blog",
+      const response = await axios.put(
+        `http://localhost:3000/blog/${blogId}`,
         formData,
         {
           headers: {
@@ -95,7 +118,6 @@ function EditBlog() {
             <input
               className="mt-1 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
               id="title"
-              placeholder="Enter a title for your blog post"
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
@@ -157,7 +179,6 @@ function EditBlog() {
             <textarea
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
               id="content"
-              placeholder="Write your blog post content here"
               rows={10}
               value={content}
               onChange={(e) => setContent(e.target.value)}

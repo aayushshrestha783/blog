@@ -71,6 +71,7 @@ const getBlogById = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+
 //get blog by user_id
 const getBlogByUserId = async (req, res) => {
   try {

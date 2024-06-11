@@ -32,10 +32,10 @@ const ProfileBlogCard = ({ card }) => {
       </div>
       <div className="flex justify-between p-6 pt-2 mt-auto">
         <button className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md">
-          Edit
+          <Link to={`/editBlog/${card._id}`}>Edit</Link>
         </button>
         <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-          Read More
+          <Link to={`/blog/${card._id}`}>Read More</Link>
         </button>
       </div>
     </div>

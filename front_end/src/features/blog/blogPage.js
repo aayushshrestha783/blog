@@ -15,7 +15,6 @@ export default function Component() {
         const response = await axios.get(
           `http://localhost:3000/blog/${blogId}`
         );
-        console.warn(response.data.blog.content);
         setBlog(response.data.blog);
       } catch (error) {
         console.log("error fetching blogs: ", error);

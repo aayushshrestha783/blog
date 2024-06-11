@@ -8,6 +8,7 @@ import ProfilePage from "../src/features/profile/profilePage";
 import Layout from "./components/Layout";
 import NotFound from "./components/Error";
 import PostBlog from "./features/blog/postBlog";
+import EditBlog from "./features/blog/editBlog";
 function App() {
   return (
     <BrowserRouter>
@@ -20,6 +21,7 @@ function App() {
           <Route path="/blog/:blogId" element={<BlogPage />} />
           <Route path="/profile" element={<ProfilePage />} />
           <Route path="/postBlog" element={<PostBlog />} />
+          <Route path="/editBlog/:blogId" element={<EditBlog />} />
         </Route>
         {/* Error route for unknown paths */}
         <Route path="*" element={<NotFound />} />

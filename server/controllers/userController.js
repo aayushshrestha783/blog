@@ -48,9 +48,28 @@ const deleteUserById = async (req, res) => {
     res.status(500).json({ success: false, error: err.message });
   }
 };
+const updateUser = async (req, res) => {
+  try {
+    const user_id = req.params.userID;
+    const { bio, occupation } = req.body;
+    // Find the user by ID
+    let user = await User.findById(user_id);
+    if (!user) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+    user.bio = bio;
+    user.occupation = occupation;
+    await user.save();
+
+    res.status(201).json({ success: true, user });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
 
 module.exports = {
   getUser,
   getUserById,
   deleteUserById,
+  updateUser,
 };

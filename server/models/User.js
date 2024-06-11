@@ -5,14 +5,11 @@ const { encryptToken, decryptToken } = require("../utils/encryption");
 const userSchema = new Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
-  occupation: { type: String },
-  bio: { type: String },
-  blog: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Blog",
-    },
-  ],
+  occupation: { type: String, default: "What do you do? Edit your Profile" },
+  bio: {
+    type: String,
+    default: "Tell us more about yourself. Edit yout Profile",
+  },
   accessToken: { type: String },
   refreshToken: { type: String },
 });

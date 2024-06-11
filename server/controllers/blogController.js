@@ -10,12 +10,11 @@ const createBlog = async (req, res) => {
     let content;
     let thumbnail;
 
-    if (req.files && req.files.file) {
+    if (req.files && req.files.markdownFile) {
       // If a file has been uploaded, read its content
 
-      const contentPath = req.files.file[0].path; // Path to the uploaded file
+      const contentPath = req.files.markdownFile[0].path; // Path to the uploaded file
       content = fs.readFileSync(contentPath, "utf8");
-      console.log(content);
       // Delete the uploaded file after processing
       fs.unlinkSync(contentPath);
     } else {

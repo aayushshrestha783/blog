@@ -102,7 +102,7 @@ const ProfilePage = () => {
               <Link to={`/postBlog`}>Post Blog</Link>
             </button>
             <button className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md">
-              Edit Profile
+              <Link to={`/editUser`}>Edit Profile</Link>
             </button>
           </div>
         </div>

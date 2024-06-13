@@ -6,7 +6,12 @@ const cookieParser = require("cookie-parser");
 const api = require("./routes/api");
 app.set("view engine", "ejs");
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3006", // Frontend URL
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
+  })
+);
 app.use(bodyParser.json()); // Parse JSON request bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

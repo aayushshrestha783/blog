@@ -5,7 +5,7 @@ const router = express.Router();
 const blogController = require("../controllers/blogController");
 const { isAuthenticated } = require("../middlewares/authMiddleware");
 // Routes for fetching blogs
-router.get("/", blogController.getBlog);
+router.get("/home/:userID", blogController.getBlog);
 router.get("/userPost/:userID", blogController.getBlogByUserId);
 router.get("/:blogID", blogController.getBlogById);
 
@@ -31,6 +31,6 @@ router.put(
 router.delete("/:blogID", isAuthenticated, blogController.deleteBlog);
 
 // Route for handling blog likes
-router.post("/:blogID/like", isAuthenticated, blogController.likeBlog);
+router.post("/:blogID/:userID", blogController.likeBlog);
 
 module.exports = router;

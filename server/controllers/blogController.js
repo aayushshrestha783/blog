@@ -51,9 +51,14 @@ const createBlog = async (req, res) => {
 //get all blog
 const getBlog = async (req, res) => {
   try {
-    const blog = await Blog.find().populate("author", "name");
+    const user_id = req.params.userID;
+    const blogs = await Blog.find().populate("author", "name");
 
-    res.status(201).json({ success: true, blog });
+    const blogsWithLikeStatus = blogs.map((blog) => {
+      const isLiked = blog.likedBy.includes(user_id);
+      return { ...blog.toObject(), isLiked };
+    });
+    res.status(201).json({ success: true, blog: blogsWithLikeStatus });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -91,7 +96,7 @@ const getBlogByUserId = async (req, res) => {
 //like handler
 const likeBlog = async (req, res, next) => {
   try {
-    const user_id = "66385c02227c9caf4b3d92e0";
+    const user_id = req.params.userID;
     const blog_id = req.params.blogID;
     const blog = await Blog.findById(blog_id).exec();
     if (!blog) {

@@ -39,7 +39,11 @@ const BlogCard = ({ card }) => {
         </div>
         <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center space-x-1">
-            <LikeButton className="mr-1 h-5 w-5" />
+            <LikeButton
+              isLiked={card.isLiked}
+              blogID={card._id}
+              className="mr-1 h-5 w-5"
+            />
             <span>{card.likes}</span>
           </div>
           <div className="flex items-center">

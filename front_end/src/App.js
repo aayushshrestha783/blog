@@ -10,25 +10,28 @@ import NotFound from "./components/Error";
 import PostBlog from "./features/blog/postBlog";
 import EditBlog from "./features/blog/editBlog";
 import EditUser from "./features/profile/editProfile";
+import { UserProvider } from "./components/AuthContext";
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* No Layout for AuthPage */}
-        <Route path="/" element={<AuthPage />} />
-        {/* Layout applied to the following routes */}
-        <Route element={<Layout />}>
-          <Route path="/home" element={<Home />} />
-          <Route path="/blog/:blogId" element={<BlogPage />} />
-          <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/postBlog" element={<PostBlog />} />
-          <Route path="/editBlog/:blogId" element={<EditBlog />} />
-          <Route path="/editUser" element={<EditUser />} />
-        </Route>
-        {/* Error route for unknown paths */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* No Layout for AuthPage */}
+          <Route path="/" element={<AuthPage />} />
+          {/* Layout applied to the following routes */}
+          <Route element={<Layout />}>
+            <Route path="/home" element={<Home />} />
+            <Route path="/blog/:blogId" element={<BlogPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/postBlog" element={<PostBlog />} />
+            <Route path="/editBlog/:blogId" element={<EditBlog />} />
+            <Route path="/editUser" element={<EditUser />} />
+          </Route>
+          {/* Error route for unknown paths */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

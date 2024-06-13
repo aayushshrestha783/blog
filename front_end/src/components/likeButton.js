@@ -1,11 +1,24 @@
 import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import axios from "axios";
+import { useUserId } from "../components/AuthContext";
 
-function LikeButton() {
-  const [liked, setLiked] = useState(false);
+function LikeButton({ isLiked, blogID }) {
+  const { userID } = useUserId();
+  console.warn(isLiked);
+  const [liked, setLiked] = useState(isLiked);
 
-  const handleClick = () => {
-    setLiked(!liked);
+  const handleClick = async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/blog/${blogID}/${userID}`,
+        {},
+        { withCredentials: true }
+      );
+      setLiked(!liked);
+    } catch (error) {
+      console.error("Error liking blog: ", error);
+    }
   };
 
   return (
@@ -14,7 +27,7 @@ function LikeButton() {
         style={{
           width: "24px",
           height: "24px",
-          color: liked ? "red" : "gray", // Both border and fill color are red when liked
+          color: liked ? "red" : "gray",
         }}
       />
     </div>

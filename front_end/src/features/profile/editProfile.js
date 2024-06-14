@@ -1,46 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useUserId } from "../../components/AuthContext";
 
 function EditUser() {
-  const [userId, setUserId] = useState("");
+  const { userID } = useUserId();
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [occupation, setOccupation] = useState("");
   const [error, setError] = useState("");
 
-  // Effect to decode the token and set the user ID
-  useEffect(() => {
-    try {
-      const token = Cookies.get("token");
-      if (token) {
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-          atob(base64)
-            .split("")
-            .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-            .join("")
-        );
-
-        const userData = JSON.parse(jsonPayload);
-        setUserId(userData.id); // Ensure this matches the key used in the payload
-        console.warn(userData);
-      }
-    } catch (err) {
-      setError(err.message);
-      console.log(err);
-    }
-  }, []); // Empty dependency array ensures this runs only once
-
   // Effect to fetch user data once user ID is set
   useEffect(() => {
-    if (userId) {
-      console.log("Fetching user data with ID: ", userId);
+    console.warn(userID);
+    if (userID) {
       const fetchUser = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/user/${userId}`
+            `http://localhost:3000/user/${userID}`
           );
           console.warn("API response: ", response.data.user);
           setName(response.data.user.name);
@@ -53,7 +29,7 @@ function EditUser() {
       };
       fetchUser();
     }
-  }, [userId]); // Dependency on userId
+  }, [userID]); // Dependency on userId
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -67,7 +43,7 @@ function EditUser() {
 
     try {
       const response = await axios.put(
-        `http://localhost:3000/user/${userId}`,
+        `http://localhost:3000/user/${userID}`,
         formData
       );
 

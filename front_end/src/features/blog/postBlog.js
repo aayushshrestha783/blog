@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
+import { useUserId } from "../../components/AuthContext";
 
 function PostBlog() {
   const [title, setTitle] = useState("");
@@ -10,6 +10,7 @@ function PostBlog() {
   const [thumbnailMessage, setThumbnailMessage] = useState("");
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [error, setError] = useState("");
+  const { userID } = useUserId();
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
@@ -38,42 +39,23 @@ function PostBlog() {
     }
 
     try {
-      const token = Cookies.get("token");
-      let userId;
-      if (token) {
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-          atob(base64)
-            .split("")
-            .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-            .join("")
-        );
-
-        const userData = JSON.parse(jsonPayload);
-
-        userId = userData.user_id; // Ensure this matches the key used in the payload
-        formData.append("author", userData.id);
-      }
-
-      const response = await axios.post(
-        "http://localhost:3000/blog",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Blog post created successfully");
-      } else {
-        setError(response.data.error || "An error occurred");
-      }
+      // Ensure this matches the key used in the payload
+      formData.append("author", userID);
     } catch (error) {
       setError(error.message);
+    }
+
+    const response = await axios.post("http://localhost:3000/blog", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        // Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.data.success) {
+      console.log("Blog post created successfully");
+    } else {
+      setError(response.data.error || "An error occurred");
     }
   };
 

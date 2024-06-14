@@ -1,6 +1,6 @@
 import React from "react";
 import LikeButton from "../../components/likeButton";
-import { HeartIcon, EyeIcon } from "../../components//Icons"; // Assume you have these icons in a separate file
+import { EyeIcon } from "../../components//Icons"; // Assume you have these icons in a separate file
 import { Link } from "react-router-dom";
 import { formatDate } from "../../components/DateFormatter";
 
@@ -9,7 +9,7 @@ const BlogCard = ({ card }) => {
   return (
     <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-800">
       <img
-        alt="Blog Post Image"
+        alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
         height="200"
         src={card.thumbnail.regular}

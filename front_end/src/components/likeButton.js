@@ -5,12 +5,11 @@ import { useUserId } from "../components/AuthContext";
 
 function LikeButton({ isLiked, blogID }) {
   const { userID } = useUserId();
-  console.warn(isLiked);
   const [liked, setLiked] = useState(isLiked);
 
   const handleClick = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:3000/blog/${blogID}/${userID}`,
         {},
         { withCredentials: true }

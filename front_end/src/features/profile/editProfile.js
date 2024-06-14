@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
+import Cookies from "js-cookie";
 
 function EditUser() {
   const { userID } = useUserId();
@@ -8,21 +9,24 @@ function EditUser() {
   const [bio, setBio] = useState("");
   const [occupation, setOccupation] = useState("");
   const [error, setError] = useState("");
-
+  const token = Cookies.get("token");
   // Effect to fetch user data once user ID is set
   useEffect(() => {
     if (userID) {
       const fetchUser = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:3000/user/${userID}`
+            `http://localhost:3000/user/${userID}`,
+            {
+              headers: {
+                Authorization: `${token}`,
+              },
+            }
           );
-          console.warn("API response: ", response.data.user);
           setName(response.data.user.name);
           setBio(response.data.user.bio || "");
           setOccupation(response.data.user.occupation || "");
         } catch (error) {
-          console.log("Error fetching user: ", error);
           setError("Error fetching user data");
         }
       };

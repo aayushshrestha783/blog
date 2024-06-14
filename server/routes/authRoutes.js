@@ -25,7 +25,7 @@ router.get(
 );
 router.get("/", authController.renderAuthPage);
 
-router.get("/success", isAuthenticated, authController.successHandler);
+router.get("/success", authController.successHandler);
 
 router.get("/error", isAuthenticated, authController.errorHandler);
 

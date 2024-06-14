@@ -4,50 +4,46 @@ import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; 
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
+import { useUserId } from "../../components/AuthContext";
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
   const [blogs, setBlogs] = useState([]);
+  const { userID } = useUserId();
+  const token = Cookies.get("token");
 
   useEffect(() => {
-    const token = Cookies.get("token");
-    if (token) {
-      try {
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-          atob(base64)
-            .split("")
-            .map(function (c) {
-              return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-            })
-            .join("")
-        );
+    if (userID) {
+      const fetchBlogs = async () => {
+        try {
+          const userResponse = await axios.get(
+            `http://localhost:3000/user/${userID}`,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `${token}`,
+              },
+            }
+          );
+          setUser(userResponse.data.user);
+          const response = await axios.get(
+            `http://localhost:3000/blog/userPost/${userID}`,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `${token}`,
+              },
+            }
+          );
+          setBlogs(response.data.blog);
+        } catch (error) {
+          console.log("error fetching blogs: ", error);
+        }
+      };
 
-        const userData = JSON.parse(jsonPayload);
-
-        const fetchBlogs = async () => {
-          try {
-            const userResponse = await axios.get(
-              `http://localhost:3000/user/${userData.id}`
-            );
-            setUser(userResponse.data.user);
-            const response = await axios.get(
-              `http://localhost:3000/blog/userPost/${userData.id}`
-            );
-            setBlogs(response.data.blog);
-          } catch (error) {
-            console.log("error fetching blogs: ", error);
-          }
-        };
-        fetchBlogs();
-      } catch (error) {
-        console.error("Error decoding token:", error);
-      }
-    } else {
-      console.warn("No token found");
+      fetchBlogs();
     }
-  }, []);
+  }, [userID]);
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
       {/* Profile Section */}

@@ -5,8 +5,8 @@ const { isAuthenticated } = require("../middlewares/authMiddleware");
 const userController = require("../controllers/userController");
 
 router.get("/", isAuthenticated, userController.getUser);
-router.get("/:userID", userController.getUserById);
-router.put("/:userID", userController.updateUser);
+router.get("/:userID", isAuthenticated, userController.getUserById);
+router.put("/:userID", isAuthenticated, userController.updateUser);
 router.delete("/:userID", isAuthenticated, userController.deleteUserById);
 
 module.exports = router;

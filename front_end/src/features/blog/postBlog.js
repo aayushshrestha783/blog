@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
+import Cookies from "js-cookie";
 
 function PostBlog() {
   const [title, setTitle] = useState("");
@@ -11,6 +12,7 @@ function PostBlog() {
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [error, setError] = useState("");
   const { userID } = useUserId();
+  const token = Cookies.get("token");
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
@@ -34,21 +36,15 @@ function PostBlog() {
     formData.append("title", title);
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
+    formData.append("author", userID);
     if (markdownFile) {
       formData.append("markdownFile", markdownFile);
-    }
-
-    try {
-      // Ensure this matches the key used in the payload
-      formData.append("author", userID);
-    } catch (error) {
-      setError(error.message);
     }
 
     const response = await axios.post("http://localhost:3000/blog", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
-        // Authorization: `Bearer ${token}`,
+        Authorization: `${token}`,
       },
     });
 

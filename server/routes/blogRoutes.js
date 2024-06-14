@@ -6,13 +6,17 @@ const blogController = require("../controllers/blogController");
 const { isAuthenticated } = require("../middlewares/authMiddleware");
 // Routes for fetching blogs
 router.get("/home/:userID", isAuthenticated, blogController.getBlog);
-router.get("/userPost/:userID", blogController.getBlogByUserId);
+router.get(
+  "/userPost/:userID",
+  isAuthenticated,
+  blogController.getBlogByUserId
+);
 router.get("/:blogID", isAuthenticated, blogController.getBlogById);
 
 // Routes for creating, updating, and deleting blogs
 router.post(
   "/",
-
+  isAuthenticated,
   multerUploads.fields([
     { name: "thumbnail", maxcount: 1 },
     { name: "markdownFile", maxCount: 1 },
@@ -21,7 +25,7 @@ router.post(
 );
 router.put(
   "/:blogID",
-
+  isAuthenticated,
   multerUploads.fields([
     { name: "thumbnail", maxcount: 1 },
     { name: "markdownFile", maxCount: 1 },

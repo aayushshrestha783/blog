@@ -13,7 +13,6 @@ const Home = () => {
       const fetchBlogs = async () => {
         try {
           const token = Cookies.get("token");
-          console.warn(token);
           const response = await axios.get(
             `http://localhost:3000/blog/home/${userID}`,
             {

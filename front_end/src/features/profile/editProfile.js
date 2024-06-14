@@ -11,7 +11,6 @@ function EditUser() {
 
   // Effect to fetch user data once user ID is set
   useEffect(() => {
-    console.warn(userID);
     if (userID) {
       const fetchUser = async () => {
         try {

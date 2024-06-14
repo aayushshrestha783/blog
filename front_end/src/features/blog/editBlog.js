@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useUserId } from "../../components/AuthContext";
 
 function EditBlog() {
+  const { userID } = useUserId();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [thumbnail, setThumbnail] = useState(null);
@@ -11,7 +13,7 @@ function EditBlog() {
   const [thumbnailMessage, setThumbnailMessage] = useState("");
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [error, setError] = useState("");
-
+  const token = Cookies.get("token");
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
 
@@ -19,7 +21,13 @@ function EditBlog() {
     const fetchContent = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/blog/${blogId}`
+          `http://localhost:3000/blog/${blogId}`,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `${token}`,
+            },
+          }
         );
         setBlog(response.data.blog);
         setTitle(response.data.blog.title);
@@ -57,46 +65,26 @@ function EditBlog() {
     formData.append("title", title);
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
+    formData.append("author", userID);
     if (markdownFile) {
       formData.append("markdownFile", markdownFile);
     }
 
-    try {
-      const token = Cookies.get("token");
-      let userId;
-      if (token) {
-        const base64Url = token.split(".")[1];
-        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-        const jsonPayload = decodeURIComponent(
-          atob(base64)
-            .split("")
-            .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-            .join("")
-        );
-
-        const userData = JSON.parse(jsonPayload);
-        userId = userData.user_id; // Ensure this matches the key used in the payload
-        formData.append("author", userData.id);
+    const response = await axios.put(
+      `http://localhost:3000/blog/${blogId}`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token}`,
+        },
       }
+    );
 
-      const response = await axios.put(
-        `http://localhost:3000/blog/${blogId}`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data.success) {
-        console.log("Blog post updated successfully");
-      } else {
-        setError(response.data.error || "An error occurred");
-      }
-    } catch (error) {
-      setError(error.message);
+    if (response.data.success) {
+      console.log("Blog post updated successfully");
+    } else {
+      setError(response.data.error || "An error occurred");
     }
   };
 

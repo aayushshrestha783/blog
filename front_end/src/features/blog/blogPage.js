@@ -4,16 +4,23 @@ import Markdown from "react-markdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { formatDate } from "../../components/DateFormatter";
+import Cookies from "js-cookie";
 
 export default function Component() {
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
 
   useEffect(() => {
+    const token = Cookies.get("token");
     const fetchContent = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/blog/${blogId}`
+          `http://localhost:3000/blog/${blogId}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
         );
         setBlog(response.data.blog);
       } catch (error) {

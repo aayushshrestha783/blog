@@ -10,11 +10,17 @@ const Home = () => {
 
   useEffect(() => {
     if (userID) {
-      console.log(userID);
       const fetchBlogs = async () => {
         try {
+          const token = Cookies.get("token");
+          console.warn(token);
           const response = await axios.get(
-            `http://localhost:3000/blog/home/${userID}`
+            `http://localhost:3000/blog/home/${userID}`,
+            {
+              headers: {
+                Authorization: `${token}`,
+              },
+            }
           );
           setBlogs(response.data.blog);
         } catch (error) {

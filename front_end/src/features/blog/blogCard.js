@@ -7,7 +7,7 @@ import { formatDate } from "../../components/DateFormatter";
 const BlogCard = ({ card }) => {
   const formatedDate = formatDate(card.creationDate);
   return (
-    <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-800">
+    <div className=" group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-200 dark:hover:bg-gray-100">
       <img
         alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"

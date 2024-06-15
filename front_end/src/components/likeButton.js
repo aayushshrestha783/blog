@@ -26,7 +26,7 @@ function LikeButton({ isLiked, blogID }) {
         style={{
           width: "24px",
           height: "24px",
-          color: liked ? "red" : "gray",
+          color: liked ? "red" : "#dcdcdc",
         }}
       />
     </div>

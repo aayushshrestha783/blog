@@ -1,7 +1,7 @@
-// ProfileBlogCard.jsx
 import React from "react";
 import { HeartIcon, EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
+import { MdDeleteOutline } from "react-icons/md";
 
 const ProfileBlogCard = ({ card }) => {
   return (
@@ -13,28 +13,36 @@ const ProfileBlogCard = ({ card }) => {
         src={card.thumbnail.regular}
         width="300"
       />
-      <div className="p-4">
-        <h3 className="text-lg font-semibold group-hover:underline">
-          {card.title}
+      <div className="p-4 flex-grow">
+        <h3 className="text-lg font-semibold group-hover:underline line-clamp-2">
+          <Link to={`/blog/${card._id}`}>{card.title}</Link>
         </h3>
       </div>
-      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 px-6 ">
-        <div className="flex items-center gap-1">
-          <EyeIcon className="h-4 w-4" />
-          <span>{card.views}</span>
+      <div className="mt-auto">
+        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 px-6">
+          <div className="flex items-center gap-1">
+            <EyeIcon className="h-4 w-4" />
+            <span>{card.views}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <HeartIcon className="h-4 w-4" />
+            <span>{card.likes}</span>
+          </div>
         </div>
-        <div className="flex items-center gap-1">
-          <HeartIcon className="h-4 w-4" />
-          <span>{card.likes}</span>
+        <div className="flex justify-between p-6 pt-2">
+          <Link
+            to={`/editBlog/${card._id}`}
+            className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md"
+          >
+            Edit
+          </Link>
+          <Link
+            to={`/blog/${card._id}`}
+            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+          >
+            Delete
+          </Link>
         </div>
-      </div>
-      <div className="flex justify-between p-6 pt-2 mt-auto">
-        <button className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md">
-          <Link to={`/editBlog/${card._id}`}>Edit</Link>
-        </button>
-        <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-          <Link to={`/blog/${card._id}`}>Read More</Link>
-        </button>
       </div>
     </div>
   );

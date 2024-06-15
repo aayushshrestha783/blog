@@ -32,7 +32,7 @@ router.put(
   ]),
   blogController.updateBlog
 );
-router.delete("/:blogID", isAuthenticated, blogController.deleteBlog);
+router.delete("/:blogID", blogController.deleteBlog);
 
 // Route for handling blog likes
 router.post("/:blogID/:userID", blogController.likeBlog);

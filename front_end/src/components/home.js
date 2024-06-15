@@ -30,10 +30,10 @@ const Home = () => {
     }
   }, [userID]);
   return (
-    <div className="bg-gray-900 text-white py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col">
+    <div className="bg-lightslategray py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col">
       <div className="max-w-7xl mx-auto flex-grow">
         <h1 className="text-4xl sm:text-5xl font-bold mb-4">
-          Welcome to My Blog
+          Welcome to Talk.
         </h1>
         <p className="text-lg sm:text-xl mb-8">
           Discover amazing content about various topics.

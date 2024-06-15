@@ -8,7 +8,7 @@ const Header = () => {
         <img src="logo.png" alt="Logo" className="h-8 mr-4" />
         <h1 className="text-white text-lg font-semibold">
           <Link to="/home" className="text-white hover:text-gray-200">
-            Blog
+            Talk
           </Link>
         </h1>
       </div>

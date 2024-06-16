@@ -44,6 +44,11 @@ const ProfilePage = () => {
       fetchBlogs();
     }
   }, [userID]);
+
+  const handleDelete = (deletedBlogId) => {
+    setBlogs(blogs.filter((blog) => blog._id !== deletedBlogId));
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
       {/* Profile Section */}
@@ -104,7 +109,11 @@ const ProfilePage = () => {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {blogs.map((blog) => (
-            <ProfileBlogCard key={blog._id} card={blog} />
+            <ProfileBlogCard
+              key={blog._id}
+              card={blog}
+              onDelete={handleDelete}
+            />
           ))}
         </div>
       </div>

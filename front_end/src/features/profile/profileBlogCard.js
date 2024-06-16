@@ -1,13 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { HeartIcon, EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
-import { MdDeleteOutline } from "react-icons/md";
+import axios from "axios";
+import Cookies from "js-cookie";
 
-const ProfileBlogCard = ({ card }) => {
+const ProfileBlogCard = ({ card, onDelete }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const token = Cookies.get("token");
+
+  const handleDelete = async () => {
+    try {
+      await axios.delete(`http://localhost:3000/blog/${card._id}`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `${token}`,
+        },
+      });
+      onDelete(card._id); // Call the onDelete callback passed from ProfilePage
+    } catch (error) {
+      console.log("Error deleting blog: ", error);
+    } finally {
+      setIsModalOpen(false);
+    }
+  };
+
   return (
     <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-200 dark:hover:bg-gray-100 flex flex-col h-full">
       <img
-        alt="Blog Post Image"
+        alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
         height="200"
         src={card.thumbnail.regular}
@@ -36,14 +56,39 @@ const ProfileBlogCard = ({ card }) => {
           >
             Edit
           </Link>
-          <Link
-            to={`/blog/${card._id}`}
+          <button
+            onClick={() => setIsModalOpen(true)}
             className="px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Delete
-          </Link>
+          </button>
         </div>
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center ">
+          <div className="bg-white  p-6 rounded-md shadow-md">
+            <h2 className="text-lg font-semibold">
+              Are you sure you want to delete this blog?
+            </h2>
+            <div className="flex justify-end gap-4 mt-4">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleDelete}
+                className="px-4 py-2 bg-red-500 text-white rounded-md"
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

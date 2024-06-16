@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";

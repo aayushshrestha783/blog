@@ -29,6 +29,6 @@ router.get("/success", authController.successHandler);
 
 router.get("/error", isAuthenticated, authController.errorHandler);
 
-router.get("/logout", authController.logout);
+router.get("/logout", isAuthenticated, authController.logout);
 
 module.exports = router;

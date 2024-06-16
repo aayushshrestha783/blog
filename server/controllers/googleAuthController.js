@@ -9,13 +9,11 @@ exports.renderAuthPage = function (req, res) {
 
 exports.handleGoogleCallback = function (req, res) {
   const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
-  console.log("Generated Token:", token);
 
   res.cookie("token", token, {
     httpOnly: false,
     secure: process.env.NODE_ENV === "production",
   });
-  console.log("Cookie Set:", res.getHeaders()["set-cookie"]);
   res.redirect("/auth/success");
 };
 
@@ -46,6 +44,6 @@ exports.logout = function (req, res, next) {
         .status(500)
         .send("An error occurred during logout. Please try again.");
     }
-    res.redirect(302, "http://localhost:3006");
+    res.status(200).send({ success: true, message: "Logged out sucessfully." });
   });
 };

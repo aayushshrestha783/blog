@@ -10,6 +10,7 @@ import NotFound from "./components/Error";
 import PostBlog from "./features/blog/postBlog";
 import EditBlog from "./features/blog/editBlog";
 import EditUser from "./features/profile/editProfile";
+import Unauthorized from "./components/Unauthorized";
 import { UserProvider } from "./components/AuthContext";
 function App() {
   return (
@@ -18,6 +19,17 @@ function App() {
         <Routes>
           {/* No Layout for AuthPage */}
           <Route path="/" element={<AuthPage />} />
+          <Route
+            path="/unauthorized"
+            element={
+              <Unauthorized
+                message="Unauthorized Access"
+                linkText="Go to Login"
+                linkTo="/"
+              />
+            }
+          />
+
           {/* Layout applied to the following routes */}
           <Route element={<Layout />}>
             <Route path="/home" element={<Home />} />

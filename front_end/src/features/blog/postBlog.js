@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function PostBlog() {
   const [title, setTitle] = useState("");
@@ -13,6 +14,12 @@ function PostBlog() {
   const [error, setError] = useState("");
   const { userID } = useUserId();
   const token = Cookies.get("token");
+  const navigate = useNavigate();
+
+  if (!token) {
+    navigate("/unauthorized");
+    return;
+  }
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);

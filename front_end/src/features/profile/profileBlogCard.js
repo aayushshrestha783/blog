@@ -3,11 +3,15 @@ import { HeartIcon, EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import { useNavigate } from "react-router-dom";
 const ProfileBlogCard = ({ card, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = Cookies.get("token");
-
+  const navigate = useNavigate();
+  if (!token) {
+    navigate("/unauthorized");
+    return;
+  }
   const handleDelete = async () => {
     try {
       await axios.delete(`http://localhost:3000/blog/${card._id}`, {

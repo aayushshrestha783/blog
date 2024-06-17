@@ -3,32 +3,39 @@ import BlogCard from "../features/blog/blogCard"; // Import your BlogCard compon
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useUserId } from "../components/AuthContext"; // Import useAuth hook
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const { userID } = useUserId();
-
+  const navigate = useNavigate();
+  const token = Cookies.get("token");
   useEffect(() => {
+    if (!token) {
+      navigate("/unauthorized");
+      return;
+    }
+    const fetchBlogs = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/blog/home/${userID}`,
+          {
+            headers: {
+              Authorization: `${token}`,
+            },
+          }
+        );
+        setBlogs(response.data.blog);
+      } catch (error) {
+        console.log("error fetching blogs: ", error);
+      }
+    };
+
     if (userID) {
-      const fetchBlogs = async () => {
-        try {
-          const token = Cookies.get("token");
-          const response = await axios.get(
-            `http://localhost:3000/blog/home/${userID}`,
-            {
-              headers: {
-                Authorization: `${token}`,
-              },
-            }
-          );
-          setBlogs(response.data.blog);
-        } catch (error) {
-          console.log("error fetching blogs: ", error);
-        }
-      };
       fetchBlogs();
     }
   }, [userID]);
+
   return (
     <div className="bg-lightslategray py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col">
       <div className="max-w-7xl mx-auto flex-grow">

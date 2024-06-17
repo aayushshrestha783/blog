@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 function EditUser() {
   const { userID } = useUserId();
@@ -10,8 +11,13 @@ function EditUser() {
   const [occupation, setOccupation] = useState("");
   const [error, setError] = useState("");
   const token = Cookies.get("token");
+  const navigate = useNavigate();
   // Effect to fetch user data once user ID is set
   useEffect(() => {
+    if (!token) {
+      navigate("/unauthorized");
+      return;
+    }
     if (userID) {
       const fetchUser = async () => {
         try {

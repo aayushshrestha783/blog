@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useUserId } from "../../components/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function EditBlog() {
   const { userID } = useUserId();
@@ -16,8 +17,13 @@ function EditBlog() {
   const token = Cookies.get("token");
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      navigate("/unauthorized");
+      return;
+    }
     const fetchContent = async () => {
       try {
         const response = await axios.get(
@@ -34,6 +40,7 @@ function EditBlog() {
         setContent(response.data.blog.content);
       } catch (error) {
         console.log("error fetching blogs: ", error);
+        navigate("/");
       }
     };
     fetchContent();

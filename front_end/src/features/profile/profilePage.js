@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProfileBlogCard from "./profileBlogCard"; // Import your ProfileBlogCard component
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; // Import icons
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
@@ -11,8 +11,13 @@ const ProfilePage = () => {
   const [blogs, setBlogs] = useState([]);
   const { userID } = useUserId();
   const token = Cookies.get("token");
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      navigate("/unauthorized");
+      return;
+    }
     if (userID) {
       const fetchBlogs = async () => {
         try {

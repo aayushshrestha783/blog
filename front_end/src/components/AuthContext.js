@@ -22,6 +22,7 @@ export const UserProvider = ({ children }) => {
       );
 
       const userData = JSON.parse(jsonPayload);
+
       setUserId(userData.id); // Set userId in context
     }
   }, []);

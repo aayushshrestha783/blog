@@ -4,15 +4,22 @@ import Markdown from "react-markdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { formatDate } from "../../components/DateFormatter";
+import { useNavigate } from "react-router-dom";
+
 import Cookies from "js-cookie";
 
 export default function Component() {
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = Cookies.get("token");
     const fetchContent = async () => {
+      if (!token) {
+        navigate("/unauthorized");
+        return;
+      }
       try {
         const response = await axios.get(
           `http://localhost:3000/blog/${blogId}`,
@@ -25,6 +32,7 @@ export default function Component() {
         setBlog(response.data.blog);
       } catch (error) {
         console.log("error fetching blogs: ", error);
+        navigate("/unauthorized");
       }
     };
     fetchContent();

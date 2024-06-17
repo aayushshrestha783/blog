@@ -53,7 +53,12 @@ function EditUser() {
     try {
       const response = await axios.put(
         `http://localhost:3000/user/${userID}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       );
 
       if (response.data.success) {

@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const passport = require("../middlewares/passportConfig");
 const authController = require("../controllers/googleAuthController");
-const { isAuthenticated } = require("../middlewares/authMiddleware");
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -23,12 +22,11 @@ router.get(
   }),
   authController.handleGoogleCallback
 );
-router.get("/", authController.renderAuthPage);
 
 router.get("/success", authController.successHandler);
 
-router.get("/error", isAuthenticated, authController.errorHandler);
+router.get("/error", authController.errorHandler);
 
-router.get("/logout", isAuthenticated, authController.logout);
+router.get("/logout", authController.logout);
 
 module.exports = router;

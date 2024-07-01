@@ -9,10 +9,16 @@ const PORT = process.env.PORT || 3000;
 const server = https.createServer(app);
 
 const startServer = async () => {
-  // TODO database connection
-  await connectDB();
-  server.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`);
-  });
+  try {
+    await connectDB();
+    console.log("Database connection successful!");
+
+    server.listen(PORT, () => {
+      console.log(`server running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error("Error connecting to database:", error);
+  }
 };
+
 startServer();

@@ -33,12 +33,13 @@ const Header = () => {
   return (
     <header className="bg-gray-800 py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
       <div className="flex items-center">
-        <img src="logo.png" alt="Logo" className="h-8 mr-4" />
-        <h1 className="text-white text-lg font-semibold">
-          <Link to="/home" className="text-white hover:text-gray-200">
-            Talk
-          </Link>
-        </h1>
+        <Link to="/home" className="text-white hover:text-gray-200">
+          <img
+            src="Talk_logo_1.png"
+            alt="Logo"
+            class="h-custom sm:h-10 md:h-14 object-cover mr-4"
+          />
+        </Link>
       </div>
       <nav>
         <ul className="flex space-x-4">

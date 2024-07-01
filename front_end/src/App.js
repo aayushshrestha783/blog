@@ -5,6 +5,7 @@ import Home from "./components/home";
 import AuthPage from "../src/features/auth/authPage";
 import BlogPage from "../src/features/blog/blogPage";
 import ProfilePage from "../src/features/profile/profilePage";
+import AuthorPage from "../src/features/profile/authorPage";
 import Layout from "./components/Layout";
 import NotFound from "./components/Error";
 import PostBlog from "./features/blog/postBlog";
@@ -35,6 +36,7 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/blog/:blogId" element={<BlogPage />} />
             <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/blog/author/:authorId" element={<AuthorPage />} />
             <Route path="/postBlog" element={<PostBlog />} />
             <Route path="/editBlog/:blogId" element={<EditBlog />} />
             <Route path="/editUser" element={<EditUser />} />

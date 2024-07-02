@@ -12,7 +12,7 @@ function EditUser() {
   const [error, setError] = useState("");
   const token = Cookies.get("token");
   const navigate = useNavigate();
-  // Effect to fetch user data once user ID is set
+
   useEffect(() => {
     if (!token) {
       navigate("/unauthorized");
@@ -38,7 +38,7 @@ function EditUser() {
       };
       fetchUser();
     }
-  }, [userID]); // Dependency on userId
+  }, [userID, token, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,10 +72,10 @@ function EditUser() {
   };
 
   return (
-    <div className="flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
-      <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
+    <div className="flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-gray-50">
+      <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold mb-6 text-gray-900">Edit Profile</h1>
-        {error && <div className="text-red-500">{error}</div>}
+        {error && <div className="text-red-500 mb-4">{error}</div>}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label
@@ -85,7 +85,7 @@ function EditUser() {
               Name
             </label>
             <input
-              className="mt-1 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 p-2"
               id="name"
               type="text"
               value={name}
@@ -99,12 +99,12 @@ function EditUser() {
             >
               Bio
             </label>
-            <input
-              className="mt-1 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
+            <textarea
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 p-2"
               id="bio"
-              type="text"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
+              rows="4"
             />
           </div>
           <div>
@@ -115,14 +115,13 @@ function EditUser() {
               Occupation
             </label>
             <input
-              className="mt-1 block w-full h-8 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
+              className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 p-2"
               id="occupation"
               type="text"
               value={occupation}
               onChange={(e) => setOccupation(e.target.value)}
             />
           </div>
-
           <div className="flex justify-end">
             <button
               className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"

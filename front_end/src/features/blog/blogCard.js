@@ -1,13 +1,13 @@
 import React from "react";
 import LikeButton from "../../components/likeButton";
-import { EyeIcon } from "../../components/Icons"; // Assume you have these icons in a separate file
+import { EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
 import { formatDate } from "../../components/DateFormatter";
 
 const BlogCard = ({ card }) => {
   const formattedDate = formatDate(card.creationDate);
   return (
-    <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-200 dark:hover:bg-gray-100">
+    <div className="group rounded-lg border transition-all hover:bg-blue-100 bg-gray-100 shadow-lg dark:border-gray-200 dark:hover:bg-gray-300">
       <img
         alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
@@ -16,7 +16,7 @@ const BlogCard = ({ card }) => {
         width="300"
       />
       <div className="p-4">
-        <h3 className="text-lg font-semibold group-hover:underline">
+        <h3 className="text-lg font-semibold group-hover:underline truncate">
           <Link to={`/blog/${card._id}`}>{card.title}</Link>
         </h3>
         <div className="mt-2 flex items-center text-sm text-gray-500 dark:text-gray-400">
@@ -39,8 +39,6 @@ const BlogCard = ({ card }) => {
           >
             {card.author.name}
           </Link>
-          <span className="mx-2">&bull;</span>
-          <span className="whitespace-nowrap">{formattedDate}</span>
         </div>
         <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
           <div className="flex items-center space-x-1">

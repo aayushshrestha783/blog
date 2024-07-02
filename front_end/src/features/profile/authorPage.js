@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import BlogCard from "../blog/blogCard"; // Import your ProfileBlogCard component
+import BlogCard from "../blog/blogCard"; // Import your BlogCard component
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; // Import icons
 import { Link, useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
@@ -19,39 +19,38 @@ const AuthorPage = () => {
       navigate("/unauthorized");
       return;
     }
+
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await axios.get(
+          `http://localhost:3000/user/${authorId}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setUser(userResponse.data.user);
+
+        const blogResponse = await axios.get(
+          `http://localhost:3000/blog/userPost/${authorId}/${userID}`,
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
+        setBlogs(blogResponse.data.blog);
+      } catch (error) {
+        console.log("Error fetching data: ", error);
+      }
+    };
+
     if (userID) {
-      const fetchBlogs = async () => {
-        try {
-          const userResponse = await axios.get(
-            `http://localhost:3000/user/${authorId}`,
-
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `${token}`,
-              },
-            }
-          );
-          setUser(userResponse.data.user);
-          const response = await axios.get(
-            `http://localhost:3000/blog/userPost/${authorId}/${userID}`,
-
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `${token}`,
-              },
-            }
-          );
-          setBlogs(response.data.blog);
-        } catch (error) {
-          console.log("error fetching blogs: ", error);
-        }
-      };
-
-      fetchBlogs();
+      fetchUserData();
     }
-  }, [userID]);
+  }, [userID, authorId, token, navigate]);
+
   const handleDelete = (deletedBlogId) => {
     setBlogs(blogs.filter((blog) => blog._id !== deletedBlogId));
   };
@@ -74,7 +73,7 @@ const AuthorPage = () => {
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">About</h3>
           <p className="text-gray-500 dark:text-gray-400">
-            {user ? user.bio : "Loading..."}{" "}
+            {user ? user.bio : "Loading..."}
           </p>
         </div>
         <div className="space-y-2">

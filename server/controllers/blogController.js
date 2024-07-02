@@ -77,8 +77,8 @@ const getBlogById = async (req, res) => {
   }
 };
 
-//get blog by user_id
-const getBlogByUserId = async (req, res) => {
+//get blog by user with author id
+const getBlogByUserAuthorId = async (req, res) => {
   try {
     const author_id = req.params.authorID;
     const user_id = req.params.userID;
@@ -98,6 +98,21 @@ const getBlogByUserId = async (req, res) => {
       return { ...blog.toObject(), isLiked };
     });
     res.status(201).json({ success: true, blog: blogsWithLikeStatus });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+//get blog by user id
+const getBlogByUserId = async (req, res) => {
+  try {
+    const user_id = req.params.userID;
+    let blog = await Blog.find({ author: user_id }).populate("author", "name");
+    if (!blog) {
+      return res
+        .status(404)
+        .json({ success: false, error: "No blog posted by user" });
+    }
+    res.status(201).json({ success: true, blog });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
@@ -190,5 +205,6 @@ module.exports = {
   updateBlog,
   deleteBlog,
   getBlogById,
+  getBlogByUserAuthorId,
   getBlogByUserId,
 };

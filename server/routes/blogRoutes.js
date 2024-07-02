@@ -10,6 +10,12 @@ router.get("/home/:userID", isAuthenticated, blogController.getBlog);
 router.get(
   "/userPost/:authorID/:userID",
   isAuthenticated,
+  blogController.getBlogByUserAuthorId
+);
+
+router.get(
+  "/userPost/:userID",
+  isAuthenticated,
   blogController.getBlogByUserId
 );
 

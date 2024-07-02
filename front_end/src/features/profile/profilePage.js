@@ -55,71 +55,70 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-8 max-w-6xl mx-auto px-4 py-8 md:py-12">
-      {/* Profile Section */}
-      <div className="space-y-6">
-        <div className="flex items-center gap-4">
-          <div className="h-20 w-20 rounded-full bg-gray-300"></div>
-          <div className="space-y-1">
-            <h2 className="text-2xl font-bold">
-              {user ? user.name : "Loading..."}
-            </h2>
-            <p className="text-gray-500 dark:text-gray-400">
-              {user ? user.occupation : "Loading..."}
-            </p>
-          </div>
-        </div>
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">About</h3>
-          <p className="text-gray-500 dark:text-gray-400">
-            {user ? user.bio : "Loading..."}{" "}
-          </p>
-        </div>
-        <div className="space-y-2">
-          <h3 className="text-lg font-semibold">Social</h3>
+    <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+      <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-16">
+        {/* Profile Section */}
+        <div className="space-y-8">
           <div className="flex items-center gap-4">
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            >
-              <TwitterIcon className="h-5 w-5" />
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            >
-              <LinkedinIcon className="h-5 w-5" />
-            </a>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50"
-            >
-              <GithubIcon className="h-5 w-5" />
-            </a>
-          </div>
-        </div>
-      </div>
-      {/* Blog Posts Section */}
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h2 className="text-2xl font-bold">My Blog Posts</h2>
-          <div className="flex items-center gap-2">
-            <button className="px-4 py-2 bg-blue-500 text-white rounded-md">
-              <Link to={`/postBlog`}>Post Blog</Link>
-            </button>
-            <button className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md">
-              <Link to={`/editUser`}>Edit Profile</Link>
-            </button>
-          </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {blogs.map((blog) => (
-            <ProfileBlogCard
-              key={blog._id}
-              card={blog}
-              onDelete={handleDelete}
+            <img
+              className="h-20 w-20 rounded-full object-cover"
+              src={user?.avatar || "/default-avatar.png"}
+              alt="User Avatar"
             />
-          ))}
+            <div className="space-y-1">
+              <h2 className="text-2xl font-bold text-gray-900">
+                {user ? user.name : "Loading..."}
+              </h2>
+              <p className="text-gray-500">
+                {user ? user.occupation : "Loading..."}
+              </p>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">About</h3>
+            <p className="text-gray-500">{user ? user.bio : "Loading..."}</p>
+          </div>
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-gray-900">Social</h3>
+            <div className="flex items-center gap-4">
+              <a href="#" className="text-gray-500 hover:text-gray-900">
+                <TwitterIcon className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-gray-500 hover:text-gray-900">
+                <LinkedinIcon className="h-5 w-5" />
+              </a>
+              <a href="#" className="text-gray-500 hover:text-gray-900">
+                <GithubIcon className="h-5 w-5" />
+              </a>
+            </div>
+          </div>
+        </div>
+        {/* Blog Posts Section */}
+        <div className="space-y-8">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-bold text-gray-900">My Blog Posts</h2>
+            <div className="flex items-center gap-4">
+              <Link to="/postBlog">
+                <button className="px-4 py-2 bg-blue-500 text-white rounded-md shadow hover:bg-blue-600">
+                  Post Blog
+                </button>
+              </Link>
+              <Link to="/editUser">
+                <button className="px-4 py-2 border border-blue-500 text-blue-500 rounded-md shadow hover:bg-blue-100">
+                  Edit Profile
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {blogs.map((blog) => (
+              <ProfileBlogCard
+                key={blog._id}
+                card={blog}
+                onDelete={handleDelete}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

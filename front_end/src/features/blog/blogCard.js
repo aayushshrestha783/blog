@@ -6,7 +6,6 @@ import { formatDate } from "../../components/DateFormatter";
 
 const BlogCard = ({ card }) => {
   const formattedDate = formatDate(card.creationDate);
-
   return (
     <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-200 dark:hover:bg-gray-100">
       <img

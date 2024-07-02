@@ -6,7 +6,6 @@ import { useUserId } from "../components/AuthContext";
 function LikeButton({ isLiked, blogID }) {
   const { userID } = useUserId();
   const [liked, setLiked] = useState(isLiked);
-
   const handleClick = async () => {
     try {
       await axios.post(

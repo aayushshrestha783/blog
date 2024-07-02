@@ -24,6 +24,7 @@ const AuthorPage = () => {
         try {
           const userResponse = await axios.get(
             `http://localhost:3000/user/${authorId}`,
+
             {
               headers: {
                 "Content-Type": "multipart/form-data",
@@ -33,7 +34,8 @@ const AuthorPage = () => {
           );
           setUser(userResponse.data.user);
           const response = await axios.get(
-            `http://localhost:3000/blog/userPost/${authorId}`,
+            `http://localhost:3000/blog/userPost/${authorId}/${userID}`,
+
             {
               headers: {
                 "Content-Type": "multipart/form-data",
@@ -50,7 +52,6 @@ const AuthorPage = () => {
       fetchBlogs();
     }
   }, [userID]);
-
   const handleDelete = (deletedBlogId) => {
     setBlogs(blogs.filter((blog) => blog._id !== deletedBlogId));
   };

@@ -35,9 +35,9 @@ const Header = () => {
       <div className="flex items-center">
         <Link to="/home" className="text-white hover:text-gray-200">
           <img
-            src="Talk_logo_1.png"
+            src={`${process.env.PUBLIC_URL}/Talk_logo_1.png`} // Use absolute path
             alt="Logo"
-            class="h-custom sm:h-10 md:h-14 object-cover mr-4"
+            className="h-custom sm:h-10 md:h-14 object-cover mr-4"
           />
         </Link>
       </div>

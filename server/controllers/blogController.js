@@ -53,7 +53,7 @@ const getBlog = async (req, res) => {
   try {
     const user_id = req.params.userID;
     const blogs = await Blog.find().populate("author", "name");
-
+    console.log(user_id);
     const blogsWithLikeStatus = blogs.map((blog) => {
       const isLiked = blog.likedBy.includes(user_id);
       return { ...blog.toObject(), isLiked };
@@ -80,14 +80,24 @@ const getBlogById = async (req, res) => {
 //get blog by user_id
 const getBlogByUserId = async (req, res) => {
   try {
+    const author_id = req.params.authorID;
     const user_id = req.params.userID;
-    let blog = await Blog.find({ author: user_id }).populate("author", "name");
-    if (!blog) {
+    console.log(author_id);
+    console.log(user_id);
+    const blogs = await Blog.find({ author: author_id }).populate(
+      "author",
+      "name"
+    );
+    if (!blogs) {
       return res
         .status(404)
         .json({ success: false, error: "No blog posted by user" });
     }
-    res.status(201).json({ success: true, blog });
+    const blogsWithLikeStatus = blogs.map((blog) => {
+      const isLiked = blog.likedBy.includes(user_id);
+      return { ...blog.toObject(), isLiked };
+    });
+    res.status(201).json({ success: true, blog: blogsWithLikeStatus });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

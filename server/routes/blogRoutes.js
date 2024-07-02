@@ -6,11 +6,13 @@ const blogController = require("../controllers/blogController");
 const { isAuthenticated } = require("../middlewares/authMiddleware");
 // Routes for fetching blogs
 router.get("/home/:userID", isAuthenticated, blogController.getBlog);
+
 router.get(
-  "/userPost/:userID",
+  "/userPost/:authorID/:userID",
   isAuthenticated,
   blogController.getBlogByUserId
 );
+
 router.get("/:blogID", isAuthenticated, blogController.getBlogById);
 
 // Routes for creating, updating, and deleting blogs

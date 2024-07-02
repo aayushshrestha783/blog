@@ -56,28 +56,25 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-blue-20  py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col relative">
-      <div className="absolute top-4 right-4 flex items-center space-x-2">
-        <div className="relative">
-          <input
-            type="text"
-            placeholder="Filter..."
-            className="p-2 rounded border border-gray-300 pr-10 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={searchQuery}
-            onChange={handleSearch}
-          />
-          <button className="absolute top-1/2 right-2 transform -translate-y-1/2">
-            <SearchIcon className="w-5 h-5 text-gray-500" />
-          </button>
-        </div>
-      </div>
-      <div className="max-w-7xl mx-auto flex-grow">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4 text-blue-900 text-center">
+    <div className="bg-gradient-to-br from-green-50 to-blue-50 py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col items-center">
+      <div className="max-w-7xl w-full">
+        <h1 className="text-4xl sm:text-5xl font-bold text-blue-900 text-center mb-8">
           Welcome to Talk.
         </h1>
-        <p className="text-lg sm:text-xl mb-8 text-gray-700 text-center">
-          Discover amazing content about various topics.
-        </p>
+        <div className="flex justify-center mb-8">
+          <div className="relative w-full max-w-xl">
+            <input
+              type="text"
+              placeholder="Filter..."
+              className="w-full p-2 rounded-full border border-gray-300 pr-10 shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={searchQuery}
+              onChange={handleSearch}
+            />
+            <button className="absolute top-1/2 right-3 transform -translate-y-1/2">
+              <SearchIcon className="w-5 h-5 text-gray-500" />
+            </button>
+          </div>
+        </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
           {filteredBlogs.length > 0 ? (
             filteredBlogs.map((blog) => <BlogCard key={blog._id} card={blog} />)

@@ -44,75 +44,77 @@ export default function Component() {
   const formattedDate = formatDate(blog.creationDate);
 
   return (
-    <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-16">
-        <main className="space-y-8">
-          <article className="space-y-6">
-            <h1 className="text-4xl font-bold text-gray-900">{blog.title}</h1>
-            <div className="text-gray-500">
-              {blog.author ? (
-                <>
-                  <span>By {blog.author.name}</span>
-                  <span className="mx-2">•</span>
-                  <span>{formattedDate}</span>
-                </>
-              ) : (
-                <span>Author information is not available</span>
-              )}
+    <div className="bg-gradient-to-br from-green-50 to-blue-50 ">
+      <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-[3fr_1fr] gap-16">
+          <main className="space-y-8">
+            <article className="space-y-6">
+              <h1 className="text-4xl font-bold text-gray-900">{blog.title}</h1>
+              <div className="text-gray-500">
+                {blog.author ? (
+                  <>
+                    <span>By {blog.author.name}</span>
+                    <span className="mx-2">•</span>
+                    <span>{formattedDate}</span>
+                  </>
+                ) : (
+                  <span>Author information is not available</span>
+                )}
+              </div>
+              <div className="prose max-w-none text-justify">
+                <Markdown>{blog.content}</Markdown>
+              </div>
+            </article>
+          </main>
+          <aside className="space-y-8">
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-gray-900">Search</h2>
+              <div className="relative">
+                <input
+                  className="w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 pr-10"
+                  placeholder="Search blog posts..."
+                  type="text"
+                />
+                <button
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2"
+                  type="button"
+                >
+                  <SearchIcon />
+                </button>
+              </div>
             </div>
-            <div className="prose max-w-none text-justify">
-              <Markdown>{blog.content}</Markdown>
+            <div className="space-y-4">
+              <h2 className="text-lg font-bold text-gray-900">Recent Posts</h2>
+              <ul className="space-y-2">
+                <li>
+                  <Link className="hover:underline" to="#">
+                    The Benefits of Meditation
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:underline" to="#">
+                    How to Declutter Your Home
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:underline" to="#">
+                    The Power of Positive Thinking
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:underline" to="#">
+                    5 Healthy Habits to Adopt
+                  </Link>
+                </li>
+                <li>
+                  <Link className="hover:underline" to="#">
+                    The Importance of Self-Care
+                  </Link>
+                </li>
+              </ul>
             </div>
-          </article>
-        </main>
-        <aside className="space-y-8">
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Search</h2>
-            <div className="relative">
-              <input
-                className="w-full border border-gray-300 rounded-md px-4 py-2 shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500 pr-10"
-                placeholder="Search blog posts..."
-                type="text"
-              />
-              <button
-                className="absolute right-2 top-1/2 transform -translate-y-1/2"
-                type="button"
-              >
-                <SearchIcon />
-              </button>
-            </div>
-          </div>
-          <div className="space-y-4">
-            <h2 className="text-lg font-bold text-gray-900">Recent Posts</h2>
-            <ul className="space-y-2">
-              <li>
-                <Link className="hover:underline" to="#">
-                  The Benefits of Meditation
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline" to="#">
-                  How to Declutter Your Home
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline" to="#">
-                  The Power of Positive Thinking
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline" to="#">
-                  5 Healthy Habits to Adopt
-                </Link>
-              </li>
-              <li>
-                <Link className="hover:underline" to="#">
-                  The Importance of Self-Care
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </aside>
+          </aside>
+        </div>
       </div>
     </div>
   );

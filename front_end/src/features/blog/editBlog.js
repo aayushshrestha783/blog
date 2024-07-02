@@ -96,7 +96,7 @@ function EditBlog() {
   };
 
   return (
-    <div className="flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
+    <div className="bg-gradient-to-br from-green-50 to-blue-20 flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
       <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold mb-6 text-gray-900">
           Edit Blog Post

@@ -56,7 +56,7 @@ const Home = () => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-green-50 py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col relative">
+    <div className="bg-gradient-to-br from-green-50 to-blue-20  py-16 px-4 sm:px-6 lg:px-8 min-h-screen flex flex-col relative">
       <div className="absolute top-4 right-4 flex items-center space-x-2">
         <div className="relative">
           <input

@@ -29,7 +29,7 @@ const ProfileBlogCard = ({ card, onDelete }) => {
   };
 
   return (
-    <div className="group rounded-lg border transition-all hover:bg-gray-100 dark:border-gray-200 dark:hover:bg-gray-100 flex flex-col h-full">
+    <div className="group rounded-lg border transition-all hover:bg-blue-50 bg-gray-100 shadow-lg dark:border-gray-200 dark:hover:bg-gray-250 flex flex-col h-full">
       <img
         alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"

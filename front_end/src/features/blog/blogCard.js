@@ -2,12 +2,10 @@ import React from "react";
 import LikeButton from "../../components/likeButton";
 import { EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
-import { formatDate } from "../../components/DateFormatter";
 
 const BlogCard = ({ card }) => {
-  const formattedDate = formatDate(card.creationDate);
   return (
-    <div className="group rounded-lg border transition-all hover:bg-blue-100 bg-gray-100 shadow-lg dark:border-gray-200 dark:hover:bg-gray-300">
+    <div className="group rounded-lg border transition-all hover:bg-blue-50 bg-gray-100 shadow-lg dark:border-gray-200 dark:hover:bg-gray-250">
       <img
         alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
@@ -40,7 +38,7 @@ const BlogCard = ({ card }) => {
             {card.author.name}
           </Link>
         </div>
-        <div className="mt-4 flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
+        <div className="mt-4 flex items-center space-x-4 text-sm text-gray-800 dark:text-gray-400">
           <div className="flex items-center space-x-1">
             <LikeButton
               isLiked={card.isLiked}

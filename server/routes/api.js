@@ -1,5 +1,6 @@
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.use(
     secret: process.env.sessionSecret,
     resave: false,
     saveUninitialized: true,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
     cookie: { secure: false },
   })
 );

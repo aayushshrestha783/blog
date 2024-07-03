@@ -11,8 +11,10 @@ exports.handleGoogleCallback = function (req, res) {
   const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   res.cookie("token", token, {
-    httpOnly: false,
+    httpOnly: true,
     secure: process.env.NODE_ENV === "production",
+    sameSite: "Strict",
+    path: "/",
   });
   res.redirect("https://blog-8g9y.onrender.com/auth/success");
 };

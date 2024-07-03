@@ -4,6 +4,8 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const api = require("./routes/api");
+require("dotenv").config();
+
 const front_end_api = process.env.PROD_API;
 app.set("view engine", "ejs");
 

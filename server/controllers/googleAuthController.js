@@ -14,7 +14,7 @@ exports.handleGoogleCallback = function (req, res) {
     httpOnly: false,
     secure: process.env.NODE_ENV === "production",
   });
-  res.redirect("https://blog-xi-ivory-70.vercel.app/auth/success");
+  res.redirect("https://blog-8g9y.onrender.com/auth/success");
 };
 
 exports.successHandler = async function (req, res) {

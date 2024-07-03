@@ -4,11 +4,12 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const api = require("./routes/api");
+const front_end_api = process.env.PROD_API;
 app.set("view engine", "ejs");
 
 app.use(
   cors({
-    origin: "http://localhost:3006", // Frontend URL
+    origin: front_end_api, // Frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );

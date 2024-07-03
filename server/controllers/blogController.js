@@ -53,7 +53,6 @@ const getBlog = async (req, res) => {
   try {
     const user_id = req.params.userID;
     const blogs = await Blog.find().populate("author", "name");
-    console.log(user_id);
     const blogsWithLikeStatus = blogs.map((blog) => {
       const isLiked = blog.likedBy.includes(user_id);
       return { ...blog.toObject(), isLiked };
@@ -82,8 +81,6 @@ const getBlogByUserAuthorId = async (req, res) => {
   try {
     const author_id = req.params.authorID;
     const user_id = req.params.userID;
-    console.log(author_id);
-    console.log(user_id);
     const blogs = await Blog.find({ author: author_id }).populate(
       "author",
       "name"

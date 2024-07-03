@@ -25,7 +25,7 @@ exports.successHandler = async function (req, res) {
       return res.status(404).send("User not found");
     }
 
-    res.redirect(302, "http://localhost:3006/home");
+    res.redirect(302, "https://blog-xi-ivory-70.vercel.app/home");
   } catch (error) {
     res.status(500).send(error);
   }

@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+const api = process.env.REACT_APP_API;
+
 const ProfileBlogCard = ({ card, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = Cookies.get("token");
@@ -14,7 +16,7 @@ const ProfileBlogCard = ({ card, onDelete }) => {
   }
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:3000/blog/${card._id}`, {
+      await axios.delete(`${api}/blog/${card._id}`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${token}`,

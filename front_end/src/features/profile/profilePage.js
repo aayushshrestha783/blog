@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
+const api = process.env.REACT_APP_API;
 
 const ProfilePage = () => {
   const [user, setUser] = useState(null);
@@ -21,25 +22,19 @@ const ProfilePage = () => {
     if (userID) {
       const fetchBlogs = async () => {
         try {
-          const userResponse = await axios.get(
-            `http://localhost:3000/user/${userID}`,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `${token}`,
-              },
-            }
-          );
+          const userResponse = await axios.get(`${api}/user/${userID}`, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `${token}`,
+            },
+          });
           setUser(userResponse.data.user);
-          const response = await axios.get(
-            `http://localhost:3000/blog/userPost/${userID}`,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-                Authorization: `${token}`,
-              },
-            }
-          );
+          const response = await axios.get(`${api}/blog/userPost/${userID}`, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `${token}`,
+            },
+          });
           setBlogs(response.data.blog);
         } catch (error) {
           console.log("error fetching blogs: ", error);

@@ -9,7 +9,7 @@ passport.use(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/auth/google/callback",
+      callbackURL: "https://blog-8g9y.onrender.com/auth/google/callback",
     },
     async function (accessToken, refreshToken, profile, done) {
       try {

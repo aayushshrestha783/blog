@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Spinner from "../../components/Spinner"; // Assuming you have a spinner component
+const api = process.env.REACT_APP_API;
 
 function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -8,7 +9,7 @@ function SignInPage() {
   const handleGoogleSignIn = () => {
     setIsLoading(true);
     try {
-      window.location.href = "http://localhost:3000/auth/google"; // Update with your backend URL
+      window.location.href = `${api}/auth/google`; // Update with your backend URL
     } catch (error) {
       console.error("Failed to initiate Google Sign-In", error);
       setIsLoading(false);

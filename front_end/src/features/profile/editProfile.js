@@ -3,7 +3,7 @@ import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
-
+const api = process.env.REACT_APP_API;
 function EditUser() {
   const { userID } = useUserId();
   const [name, setName] = useState("");
@@ -21,14 +21,11 @@ function EditUser() {
     if (userID) {
       const fetchUser = async () => {
         try {
-          const response = await axios.get(
-            `http://localhost:3000/user/${userID}`,
-            {
-              headers: {
-                Authorization: `${token}`,
-              },
-            }
-          );
+          const response = await axios.get(`${api}/user/${userID}`, {
+            headers: {
+              Authorization: `${token}`,
+            },
+          });
           setName(response.data.user.name);
           setBio(response.data.user.bio || "");
           setOccupation(response.data.user.occupation || "");
@@ -51,15 +48,11 @@ function EditUser() {
     const formData = { bio, occupation };
 
     try {
-      const response = await axios.put(
-        `http://localhost:3000/user/${userID}`,
-        formData,
-        {
-          headers: {
-            Authorization: `${token}`,
-          },
-        }
-      );
+      const response = await axios.put(`${api}/user/${userID}`, formData, {
+        headers: {
+          Authorization: `${token}`,
+        },
+      });
 
       if (response.data.success) {
         console.log("User post updated successfully");

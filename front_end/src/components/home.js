@@ -6,6 +6,7 @@ import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "../components/Icons";
 
+const api = process.env.REACT_APP_API;
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -22,14 +23,11 @@ const Home = () => {
     }
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/blog/home/${userID}`,
-          {
-            headers: {
-              Authorization: `${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${api}/blog/home/${userID}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
         setBlogs(response.data.blog);
         setFilteredBlogs(response.data.blog);
       } catch (error) {

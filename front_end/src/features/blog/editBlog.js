@@ -18,6 +18,7 @@ function EditBlog() {
   const { blogId } = useParams();
   const [blog, setBlog] = useState(null);
   const navigate = useNavigate();
+  const api = process.env.REACT_APP_API;
 
   useEffect(() => {
     if (!token) {
@@ -26,15 +27,12 @@ function EditBlog() {
     }
     const fetchContent = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:3000/blog/${blogId}`,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${api}/blog/${blogId}`, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `${token}`,
+          },
+        });
         setBlog(response.data.blog);
         setTitle(response.data.blog.title);
         setContent(response.data.blog.content);
@@ -77,16 +75,12 @@ function EditBlog() {
       formData.append("markdownFile", markdownFile);
     }
 
-    const response = await axios.put(
-      `http://localhost:3000/blog/${blogId}`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `${token}`,
-        },
-      }
-    );
+    const response = await axios.put(`${api}/blog/${blogId}`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `${token}`,
+      },
+    });
 
     if (response.data.success) {
       console.log("Blog post updated successfully");

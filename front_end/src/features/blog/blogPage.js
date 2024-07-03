@@ -6,6 +6,7 @@ import axios from "axios";
 import { formatDate } from "../../components/DateFormatter";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+const api = process.env.REACT_APP_API;
 
 export default function Component() {
   const { blogId } = useParams();
@@ -20,14 +21,11 @@ export default function Component() {
         return;
       }
       try {
-        const response = await axios.get(
-          `http://localhost:3000/blog/${blogId}`,
-          {
-            headers: {
-              Authorization: `${token}`,
-            },
-          }
-        );
+        const response = await axios.get(`${api}/blog/${blogId}`, {
+          headers: {
+            Authorization: `${token}`,
+          },
+        });
         setBlog(response.data.blog);
       } catch (error) {
         console.log("error fetching blogs: ", error);

@@ -5,6 +5,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
+const api = process.env.REACT_APP_API;
 
 const AuthorPage = () => {
   const [user, setUser] = useState(null);
@@ -23,7 +24,7 @@ const AuthorPage = () => {
       const fetchBlogs = async () => {
         try {
           const userResponse = await axios.get(
-            `http://localhost:3000/user/${authorId}`,
+            `{api}/user/${authorId}`,
 
             {
               headers: {
@@ -34,7 +35,7 @@ const AuthorPage = () => {
           );
           setUser(userResponse.data.user);
           const response = await axios.get(
-            `http://localhost:3000/blog/userPost/${authorId}/${userID}`,
+            `${api}/blog/userPost/${authorId}/${userID}`,
 
             {
               headers: {

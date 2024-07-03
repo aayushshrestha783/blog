@@ -3,6 +3,7 @@ import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+const api = process.env.REACT_APP_API;
 
 function PostBlog() {
   const [title, setTitle] = useState("");
@@ -48,7 +49,7 @@ function PostBlog() {
       formData.append("markdownFile", markdownFile);
     }
 
-    const response = await axios.post("http://localhost:3000/blog", formData, {
+    const response = await axios.post(`${api}/blog`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `${token}`,

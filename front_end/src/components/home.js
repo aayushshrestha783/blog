@@ -16,10 +16,10 @@ const Home = () => {
   const token = Cookies.get("token");
 
   useEffect(() => {
-    if (!token) {
-      navigate("/unauthorized");
-      return;
-    }
+    // if (!token) {
+    //   navigate("/unauthorized");
+    //   return;
+    // }
     const fetchBlogs = async () => {
       try {
         const response = await api.get(`blog/home/${userID}`, {

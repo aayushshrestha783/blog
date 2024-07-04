@@ -5,8 +5,7 @@ import Cookies from "js-cookie";
 import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "../components/Icons";
-
-const api = process.env.REACT_APP_API;
+import api from "../utils/api";
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -23,7 +22,7 @@ const Home = () => {
     }
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`${api}/blog/home/${userID}`, {
+        const response = await api.get(`blog/home/${userID}`, {
           headers: {
             Authorization: `${token}`,
           },

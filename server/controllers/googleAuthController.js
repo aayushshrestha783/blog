@@ -12,9 +12,11 @@ exports.handleGoogleCallback = function (req, res) {
 
   res.cookie("token", token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
+    secure: true,
+    sameSite: "None",
+    domain: "blog-8g9y.onrender.com", // Updated to match your specific subdomain
     path: "/",
+    maxAge: 3600000, // 1 hour in milliseconds
   });
   res.redirect("https://blog-8g9y.onrender.com/auth/success");
 };

@@ -73,13 +73,9 @@ const Home = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-          {filteredBlogs.length > 0 ? (
-            filteredBlogs.map((blog) => <BlogCard key={blog._id} card={blog} />)
-          ) : (
-            <p className="text-lg text-gray-500 text-center col-span-3">
-              No blogs available
-            </p>
-          )}
+          {filteredBlogs.map((blog) => (
+            <BlogCard key={blog._id} card={blog} />
+          ))}
         </div>
       </div>
     </div>

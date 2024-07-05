@@ -21,6 +21,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.set("view engine", "ejs");
+app.use(
+  session({
+    secret: process.env.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({ mongoUrl: process.env.MONGO_URI }),
+    cookie: {
+      secure: process.env.NODE_ENV === "production", // Ensure secure cookies in production
+      httpOnly: true,
+      sameSite: "Lax",
+    },
+  })
+);
 
 app.use("/", api);
 

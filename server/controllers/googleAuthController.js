@@ -2,6 +2,7 @@
 const User = require("../models/User");
 const { decryptToken } = require("../utils/encryption");
 const jwt = require("jsonwebtoken");
+const front_end_uri = process.env.PROD_API;
 
 exports.renderAuthPage = function (req, res) {
   res.render("pages/auth");
@@ -10,14 +11,6 @@ exports.renderAuthPage = function (req, res) {
 exports.handleGoogleCallback = async function (req, res) {
   const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
 
-  res.cookie("token", token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    //domain: "blog-xi-ivory-70.vercel.app", // Updated to match your specific subdomain
-    path: "/",
-    maxAge: 3600000, // 1 hour in milliseconds
-  });
   try {
     const user = await User.findById(req.user.id);
 
@@ -25,7 +18,7 @@ exports.handleGoogleCallback = async function (req, res) {
       return res.status(404).send("User not found");
     }
 
-    res.redirect(302, "https://blog-xi-ivory-70.vercel.app/home");
+    res.status(200).json({ token, redirectUrl: `${front_end_uri}/home` });
   } catch (error) {
     res.status(500).send(error);
   }

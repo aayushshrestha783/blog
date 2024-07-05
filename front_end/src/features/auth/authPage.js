@@ -6,14 +6,25 @@ const api = process.env.REACT_APP_API;
 function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleGoogleSignIn = () => {
+  const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      window.location.href = `${api}/auth/google`; // Update with your backend URL
+      const response = await fetch(`${api}/auth/google`, {
+        method: "GET",
+        credentials: "include",
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem("token", data.token); // Store token in local storage
+        window.location.href = data.redirectUrl; // Redirect to the provided URL
+      } else {
+        console.error("Failed to initiate Google Sign-In", response.statusText);
+        setIsLoading(false);
+      }
     } catch (error) {
       console.error("Failed to initiate Google Sign-In", error);
       setIsLoading(false);
-      // Optionally, set an error state and display a user-friendly message
     }
   };
 

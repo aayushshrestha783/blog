@@ -1,32 +1,21 @@
 import React, { useState, useEffect } from "react";
 import BlogCard from "../features/blog/blogCard";
-import axios from "axios";
-import Cookies from "js-cookie";
+import api from "../utils/api"; // Use the axios instance
 import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "../components/Icons";
-import api from "../utils/api";
+
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredBlogs, setFilteredBlogs] = useState([]);
-
   const { userID } = useUserId();
   const navigate = useNavigate();
-  const token = Cookies.get("token");
 
   useEffect(() => {
-    // if (!token) {
-    //   navigate("/unauthorized");
-    //   return;
-    // }
     const fetchBlogs = async () => {
       try {
-        const response = await api.get(`blog/home/${userID}`, {
-          headers: {
-            Authorization: `${token}`,
-          },
-        });
+        const response = await api.get(`blog/home/${userID}`);
         setBlogs(response.data.blog);
         setFilteredBlogs(response.data.blog);
       } catch (error) {
@@ -37,7 +26,7 @@ const Home = () => {
     if (userID) {
       fetchBlogs();
     }
-  }, [userID, token, navigate]);
+  }, [userID, navigate]);
 
   useEffect(() => {
     const filtered = blogs.filter(

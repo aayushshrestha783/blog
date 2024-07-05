@@ -7,7 +7,7 @@ exports.renderAuthPage = function (req, res) {
   res.render("pages/auth");
 };
 
-exports.handleGoogleCallback = function (req, res) {
+exports.handleGoogleCallback = async function (req, res) {
   const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   res.cookie("token", token, {
@@ -18,7 +18,17 @@ exports.handleGoogleCallback = function (req, res) {
     path: "/",
     maxAge: 3600000, // 1 hour in milliseconds
   });
-  res.redirect("https://blog-8g9y.onrender.com/auth/success");
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    res.redirect(302, "https://blog-xi-ivory-70.vercel.app/home");
+  } catch (error) {
+    res.status(500).send(error);
+  }
 };
 
 exports.successHandler = async function (req, res) {

@@ -14,7 +14,7 @@ exports.handleGoogleCallback = function (req, res) {
     httpOnly: true,
     secure: true,
     sameSite: "None",
-    domain: "blog-8g9y.onrender.com", // Updated to match your specific subdomain
+    domain: "blog-xi-ivory-70.vercel.app", // Updated to match your specific subdomain
     path: "/",
     maxAge: 3600000, // 1 hour in milliseconds
   });

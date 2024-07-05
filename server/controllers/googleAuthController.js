@@ -11,9 +11,9 @@ exports.handleGoogleCallback = function (req, res) {
   const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
 
   res.cookie("token", token, {
-    httpOnly: false,
+    httpOnly: true,
     secure: true,
-    sameSite: "None",
+    sameSite: "none",
     domain: "blog-xi-ivory-70.vercel.app", // Updated to match your specific subdomain
     path: "/",
     maxAge: 3600000, // 1 hour in milliseconds

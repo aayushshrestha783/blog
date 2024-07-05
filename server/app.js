@@ -8,10 +8,11 @@ require("dotenv").config();
 
 const front_end_api = process.env.PROD_API;
 app.set("view engine", "ejs");
+app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: front_end_api, // Frontend URL
+    origin: true, // Frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );

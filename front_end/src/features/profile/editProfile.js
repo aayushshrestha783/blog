@@ -12,6 +12,8 @@ function EditUser() {
   const [error, setError] = useState("");
   const token = Cookies.get("token");
   const navigate = useNavigate();
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
+  const [failedMessage, setFailedMessage] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -55,8 +57,9 @@ function EditUser() {
       });
 
       if (response.data.success) {
-        console.log("User post updated successfully");
+        setSuccessMessage("Profile updated successfully!"); // Set success message
       } else {
+        setFailedMessage("Update failed!!");
         setError(response.data.error || "An error occurred");
       }
     } catch (error) {
@@ -69,6 +72,10 @@ function EditUser() {
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold mb-6 text-gray-900">Edit Profile</h1>
         {error && <div className="text-red-500 mb-4">{error}</div>}
+        {successMessage && (
+          <div className="text-green-500">{successMessage}</div>
+        )}{" "}
+        {failedMessage && <div className="text-green-500">{failedMessage}</div>}{" "}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label

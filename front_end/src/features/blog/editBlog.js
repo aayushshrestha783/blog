@@ -19,6 +19,8 @@ function EditBlog() {
   const [blog, setBlog] = useState(null);
   const navigate = useNavigate();
   const api = process.env.REACT_APP_API;
+  const [successMessage, setSuccessMessage] = useState("");
+  const [failedMessage, setFailedMessage] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -83,8 +85,9 @@ function EditBlog() {
     });
 
     if (response.data.success) {
-      console.log("Blog post updated successfully");
+      setSuccessMessage("Blog updated successfully!"); // Set success message
     } else {
+      setFailedMessage("Update failed!!");
       setError(response.data.error || "An error occurred");
     }
   };
@@ -96,6 +99,10 @@ function EditBlog() {
           Edit Blog Post
         </h1>
         {error && <div className="text-red-500">{error}</div>}
+        {successMessage && (
+          <div className="text-green-500">{successMessage}</div>
+        )}{" "}
+        {failedMessage && <div className="text-green-500">{failedMessage}</div>}{" "}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label

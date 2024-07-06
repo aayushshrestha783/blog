@@ -13,6 +13,9 @@ function PostBlog() {
   const [thumbnailMessage, setThumbnailMessage] = useState("");
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [error, setError] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [failedMessage, setFailedMessage] = useState("");
+
   const { userID } = useUserId();
   const token = Cookies.get("token");
   const navigate = useNavigate();
@@ -57,8 +60,9 @@ function PostBlog() {
     });
 
     if (response.data.success) {
-      console.log("Blog post created successfully");
+      setSuccessMessage("Blog posted successfully!"); // Set success message
     } else {
+      setFailedMessage("Post failed!!");
       setError(response.data.error || "An error occurred");
     }
   };
@@ -71,6 +75,13 @@ function PostBlog() {
             Create New Blog Post
           </h1>
           {error && <div className="text-red-500">{error}</div>}
+          {successMessage && (
+            <div className="text-green-500">{successMessage}</div>
+          )}{" "}
+          {failedMessage && (
+            <div className="text-green-500">{failedMessage}</div>
+          )}{" "}
+          {/* Display success message */}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label

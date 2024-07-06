@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import axios from "axios";
 import { useUserId } from "../components/AuthContext";
+const api = process.env.REACT_APP_API;
 
 function LikeButton({ isLiked, blogID }) {
   const { userID } = useUserId();
@@ -9,7 +10,7 @@ function LikeButton({ isLiked, blogID }) {
   const handleClick = async () => {
     try {
       await axios.post(
-        `http://localhost:3000/blog/${blogID}/${userID}`,
+        `${api}/blog/${blogID}/${userID}`,
         {},
         { withCredentials: true }
       );

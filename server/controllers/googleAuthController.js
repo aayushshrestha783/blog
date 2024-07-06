@@ -18,7 +18,6 @@ exports.handleGoogleCallback = async function (req, res) {
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
-    console.log(user._id);
     // Send the token in the response body
     res.redirect(`${front_end_uri}?token=${token}`);
   } catch (error) {

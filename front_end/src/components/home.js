@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 import BlogCard from "../features/blog/blogCard";
 import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -12,12 +13,18 @@ const Home = () => {
   const { userID } = useUserId();
   const navigate = useNavigate();
   const api = process.env.REACT_APP_API;
+  const [hasMore, setHasMore] = useState(true); // Manage whether more blogs are available to load
+
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(`${api}/blog/home/${userID}`);
         setBlogs(response.data.blog);
         setFilteredBlogs(response.data.blog);
+        // Check if there are more blogs to load initially
+        if (response.data.blog.length === 0) {
+          setHasMore(false);
+        }
       } catch (error) {
         console.log("error fetching blogs: ", error);
       }
@@ -35,10 +42,28 @@ const Home = () => {
         blog.author.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
     setFilteredBlogs(filtered);
+    // Update hasMore based on filtered blogs length
+    setHasMore(filtered.length < blogs.length);
   }, [searchQuery, blogs]);
 
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
+  };
+
+  const fetchMoreBlogs = async () => {
+    try {
+      const response = await axios.get(
+        `${api}/blog/home/${userID}?start=${filteredBlogs.length}&limit=10`
+      );
+      setBlogs([...blogs, ...response.data.blog]);
+      setFilteredBlogs([...filteredBlogs, ...response.data.blog]);
+      // Check if there are more blogs to load
+      if (response.data.blog.length === 0) {
+        setHasMore(false);
+      }
+    } catch (error) {
+      console.log("error fetching more blogs: ", error);
+    }
   };
 
   return (
@@ -61,11 +86,18 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
-          {filteredBlogs.map((blog) => (
-            <BlogCard key={blog._id} card={blog} />
-          ))}
-        </div>
+        <InfiniteScroll
+          dataLength={filteredBlogs.length}
+          next={fetchMoreBlogs}
+          hasMore={hasMore} // Pass hasMore state to manage when to stop loading more blogs
+          loader={<h4>Loading...</h4>}
+        >
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+            {filteredBlogs.map((blog) => (
+              <BlogCard key={blog._id} card={blog} />
+            ))}
+          </div>
+        </InfiniteScroll>
       </div>
     </div>
   );

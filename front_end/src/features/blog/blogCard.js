@@ -12,6 +12,7 @@ const BlogCard = ({ card }) => {
         height="200"
         src={card.thumbnail.regular}
         width="300"
+        loading="lazy"
       />
       <div className="p-4">
         <h3 className="text-lg font-semibold group-hover:underline truncate">
@@ -29,6 +30,7 @@ const BlogCard = ({ card }) => {
                 objectFit: "cover",
               }}
               width={24}
+              loading="lazy"
             />
           </div>
           <Link

@@ -12,7 +12,7 @@ app.set("trust proxy", 1);
 
 app.use(
   cors({
-    origin: true, // Frontend URL
+    origin: front_end_api, // Frontend URL
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );

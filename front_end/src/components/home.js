@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import BlogCard from "../features/blog/blogCard";
-import api from "../utils/api"; // Use the axios instance
 import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "../components/Icons";
+import axios from "axios";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -11,11 +11,11 @@ const Home = () => {
   const [filteredBlogs, setFilteredBlogs] = useState([]);
   const { userID } = useUserId();
   const navigate = useNavigate();
-
+  const api = process.env.REACT_APP_API;
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await api.get(`blog/home/${userID}`);
+        const response = await axios.get(`${api}/blog/home/${userID}`);
         setBlogs(response.data.blog);
         setFilteredBlogs(response.data.blog);
       } catch (error) {

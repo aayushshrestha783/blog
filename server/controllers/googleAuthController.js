@@ -1,6 +1,5 @@
 // googleAuthController.js
 const User = require("../models/User");
-const { decryptToken } = require("../utils/encryption");
 const jwt = require("jsonwebtoken");
 const front_end_uri = process.env.PROD_API;
 
@@ -9,18 +8,22 @@ exports.renderAuthPage = function (req, res) {
 };
 
 exports.handleGoogleCallback = async function (req, res) {
-  const token = jwt.sign(req.user, process.env.JWT_SECRET, { expiresIn: "1h" });
-
   try {
     const user = await User.findById(req.user.id);
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).json({ error: "User not found" });
     }
 
-    res.status(200).json({ token, redirectUrl: `${front_end_uri}/home` });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+    console.log(user._id);
+    // Send the token in the response body
+    res.redirect(`${front_end_uri}?token=${token}`);
   } catch (error) {
-    res.status(500).send(error);
+    console.error("Error in Google callback:", error);
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

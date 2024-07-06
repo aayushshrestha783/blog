@@ -4,12 +4,14 @@ const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
 const User = require("../models/User");
 
+const backend_uri = process.env.PROD_SERVER_API;
+
 passport.use(
   new GoogleStrategy(
     {
       clientID: GOOGLE_CLIENT_ID,
       clientSecret: GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://blog-8g9y.onrender.com/auth/google/callback",
+      callbackURL: `${backend_uri}/auth/google/callback`,
     },
     async function (accessToken, refreshToken, profile, done) {
       try {

@@ -68,5 +68,7 @@ window.env = {
   "npm_node_execpath": "/usr/local/bin/node",
   "npm_config_prefix": "/usr/local",
   "COLORTERM": "truecolor",
-  "REACT_APP_API": "https://blog-8g9y.onrender.com"
+  "REACT_APP_API": "https://blog-8g9y.onrender.com",
+  "REACT_APP_SECRET": "http://localhost:3000",
+  "REACT_APP_ENCRYPTION_KEY": "thisisa16charkey!"
 };

@@ -1,30 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom"; // or 'react-router' depending on your version
 import Spinner from "../../components/Spinner"; // Assuming you have a spinner component
+import Cookies from "js-cookie";
+
 const api = process.env.REACT_APP_API;
 
 function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
-  const handleGoogleSignIn = async () => {
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    console.warn(token);
+    if (token) {
+      Cookies.set("token", token, { expires: 1 });
+      navigate("/home"); // Redirect to homepage
+    }
+  });
+
+  const handleGoogleSignIn = () => {
     setIsLoading(true);
     try {
-      const response = await fetch(`${api}/auth/google`, {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        localStorage.setItem("token", data.token); // Store token in local storage
-        window.location.href = data.redirectUrl; // Redirect to the provided URL
-      } else {
-        console.error("Failed to initiate Google Sign-In", response.statusText);
-        setIsLoading(false);
-      }
+      window.location.href = `${api}/auth/google`; // Update with your backend URL
     } catch (error) {
       console.error("Failed to initiate Google Sign-In", error);
       setIsLoading(false);
+      // Optionally, set an error state and display a user-friendly message
     }
   };
 

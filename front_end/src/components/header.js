@@ -4,6 +4,8 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 const Header = () => {
+  const api = process.env.REACT_APP_API;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = Cookies.get("token");
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ const Header = () => {
   const handleLogOut = async () => {
     console.warn("inside logout");
     try {
-      const response = await axios.get("http://localhost:3000/auth/logout", {
+      const response = await axios.get(`${api}/auth/logout`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `${token}`,

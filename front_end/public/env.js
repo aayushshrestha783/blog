@@ -10,7 +10,7 @@ window.env = {
   "npm_config_global_prefix": "/usr/local",
   "CONDA_SHLVL": "1",
   "CONDA_PROMPT_MODIFIER": "(base) ",
-  "TERM_PROGRAM_VERSION": "1.91.0-insider",
+  "TERM_PROGRAM_VERSION": "1.92.0-insider",
   "MallocNanoZone": "0",
   "ORIGINAL_XDG_CURRENT_DESKTOP": "undefined",
   "COLOR": "1",
@@ -68,7 +68,7 @@ window.env = {
   "npm_node_execpath": "/usr/local/bin/node",
   "npm_config_prefix": "/usr/local",
   "COLORTERM": "truecolor",
-  "REACT_APP_API": "https://blog-8g9y.onrender.com",
+  "REACT_APP_API": "http://localhost:3000",
   "REACT_APP_SECRET": "http://localhost:3000",
   "REACT_APP_ENCRYPTION_KEY": "thisisa16charkey!"
 };

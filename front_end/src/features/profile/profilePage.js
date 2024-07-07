@@ -43,7 +43,7 @@ const ProfilePage = () => {
 
       fetchBlogs();
     }
-  }, [userID]);
+  }, [userID, token, navigate]);
 
   const handleDelete = (deletedBlogId) => {
     setBlogs(blogs.filter((blog) => blog._id !== deletedBlogId));

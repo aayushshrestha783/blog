@@ -58,6 +58,9 @@ function EditUser() {
 
       if (response.data.success) {
         setSuccessMessage("Profile updated successfully!"); // Set success message
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1000);
       } else {
         setFailedMessage("Update failed!!");
         setError(response.data.error || "An error occurred");

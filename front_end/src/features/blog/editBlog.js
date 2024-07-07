@@ -44,7 +44,7 @@ function EditBlog() {
       }
     };
     fetchContent();
-  }, [blogId]);
+  }, [blogId, token, navigate]);
 
   if (!blog) {
     return <div>Loading...</div>; // Show loading state while fetching data
@@ -76,19 +76,26 @@ function EditBlog() {
     if (markdownFile) {
       formData.append("markdownFile", markdownFile);
     }
+    try {
+      const response = await axios.put(`${api}/blog/${blogId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token}`,
+        },
+      });
 
-    const response = await axios.put(`${api}/blog/${blogId}`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `${token}`,
-      },
-    });
-
-    if (response.data.success) {
-      setSuccessMessage("Blog updated successfully!"); // Set success message
-    } else {
+      if (response.data.success) {
+        setSuccessMessage("Blog updated successfully!");
+        setTimeout(() => {
+          navigate("/profile");
+        }, 1000); // Wait for 1 second before navigating
+      } else {
+        setFailedMessage("Update failed!!");
+        setError(response.data.error || "An error occurred");
+      }
+    } catch (error) {
       setFailedMessage("Update failed!!");
-      setError(response.data.error || "An error occurred");
+      setError(error.message || "An error occurred");
     }
   };
 
@@ -101,8 +108,8 @@ function EditBlog() {
         {error && <div className="text-red-500">{error}</div>}
         {successMessage && (
           <div className="text-green-500">{successMessage}</div>
-        )}{" "}
-        {failedMessage && <div className="text-green-500">{failedMessage}</div>}{" "}
+        )}
+        {failedMessage && <div className="text-red-500">{failedMessage}</div>}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label

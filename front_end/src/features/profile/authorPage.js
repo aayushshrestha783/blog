@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BlogCard from "../blog/blogCard"; // Import your ProfileBlogCard component
 import { TwitterIcon, LinkedinIcon, GithubIcon } from "../../components/Icons"; // Import icons
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
@@ -52,10 +52,7 @@ const AuthorPage = () => {
 
       fetchBlogs();
     }
-  }, [userID]);
-  const handleDelete = (deletedBlogId) => {
-    setBlogs(blogs.filter((blog) => blog._id !== deletedBlogId));
-  };
+  }, [userID, token, navigate, authorId]);
 
   return (
     <div className="bg-gradient-to-br from-green-50 to-blue-20 min-h-screen ">

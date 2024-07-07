@@ -116,3 +116,87 @@ export function SearchIcon(props) {
     </svg>
   );
 }
+
+export function CodeIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points="16 18 22 12 16 6" />
+      <polyline points="8 6 2 12 8 18" />
+    </svg>
+  );
+}
+
+export function DatabaseIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <ellipse cx="12" cy="5" rx="9" ry="3" />
+      <path d="M3 5V19A9 3 0 0 0 21 19V5" />
+      <path d="M3 12A9 3 0 0 0 21 12" />
+    </svg>
+  );
+}
+
+export function BrushIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 9L4 14L8 18L19 7L15 3L9 9Z" />
+      <path d="M2 20L9 15" />
+    </svg>
+  );
+}
+
+export function RocketIcon(props) {
+  return (
+    <svg
+      {...props}
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M9 19C9 19.55 9.45 20 10 20C10.55 20 11 19.55 11 19C11 18.45 10.55 18 10 18C9.45 18 9 18.45 9 19Z" />
+      <path d="M4.6 9.6L3 14C3 14 3 16 5 16H7L12.4 11.6" />
+      <path d="M16.5 5.5L19 3C19 3 20 4 20 5L18.5 7.5" />
+      <path d="M12.4 11.6L21 3C21 3 21.5 2.5 22 3C22.5 3.5 22 4 22 4L12.4 11.6Z" />
+      <path d="M12.4 11.6L4.6 9.6" />
+    </svg>
+  );
+}

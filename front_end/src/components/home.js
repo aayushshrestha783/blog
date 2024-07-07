@@ -5,6 +5,7 @@ import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { SearchIcon } from "../components/Icons";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -14,8 +15,13 @@ const Home = () => {
   const navigate = useNavigate();
   const api = process.env.REACT_APP_API;
   const [hasMore, setHasMore] = useState(true); // Manage whether more blogs are available to load
+  const token = Cookies.get("token");
 
   useEffect(() => {
+    if (!token) {
+      navigate("/unauthorized");
+      return;
+    }
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(`${api}/blog/home/${userID}`);
@@ -33,7 +39,7 @@ const Home = () => {
     if (userID) {
       fetchBlogs();
     }
-  }, [userID, navigate]);
+  }, [userID, navigate, token]);
 
   useEffect(() => {
     const filtered = blogs.filter(

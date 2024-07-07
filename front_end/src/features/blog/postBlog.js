@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
@@ -20,10 +20,11 @@ function PostBlog() {
   const token = Cookies.get("token");
   const navigate = useNavigate();
 
-  if (!token) {
-    navigate("/unauthorized");
-    return;
-  }
+  useEffect(() => {
+    if (!token) {
+      navigate("/unauthorized");
+    }
+  }, [token, navigate]);
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
@@ -51,24 +52,32 @@ function PostBlog() {
     if (markdownFile) {
       formData.append("markdownFile", markdownFile);
     }
+    try {
+      const response = await axios.post(`${api}/blog`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `${token}`,
+        },
+      });
 
-    const response = await axios.post(`${api}/blog`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: `${token}`,
-      },
-    });
-
-    if (response.data.success) {
-      setSuccessMessage("Blog posted successfully!"); // Set success message
-    } else {
+      if (response.data.success) {
+        setSuccessMessage("Blog posted successfully!");
+        setTimeout(() => {
+          setSuccessMessage("");
+          navigate("/profile");
+        }, 1000); // Navigate to profile after 1 second
+      } else {
+        setFailedMessage("Post failed!!");
+        setError(response.data.error || "An error occurred");
+      }
+    } catch (error) {
       setFailedMessage("Post failed!!");
-      setError(response.data.error || "An error occurred");
+      setError(error.message || "An error occurred");
     }
   };
 
   return (
-    <div className="bg-gradient-to-br from-green-50 to-blue-20 min-h-screen ">
+    <div className="bg-gradient-to-br from-green-50 to-blue-20 min-h-screen">
       <div className="flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen">
         <div className="w-full max-w-4xl bg-white rounded-lg shadow-lg p-8">
           <h1 className="text-3xl font-bold mb-6 text-gray-900">
@@ -77,11 +86,8 @@ function PostBlog() {
           {error && <div className="text-red-500">{error}</div>}
           {successMessage && (
             <div className="text-green-500">{successMessage}</div>
-          )}{" "}
-          {failedMessage && (
-            <div className="text-green-500">{failedMessage}</div>
-          )}{" "}
-          {/* Display success message */}
+          )}
+          {failedMessage && <div className="text-red-500">{failedMessage}</div>}
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
               <label

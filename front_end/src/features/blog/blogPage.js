@@ -33,7 +33,7 @@ export default function Component() {
       }
     };
     fetchContent();
-  }, [blogId]);
+  }, [blogId, navigate]);
 
   if (!blog) {
     return <div>Loading...</div>; // Show loading state while fetching data

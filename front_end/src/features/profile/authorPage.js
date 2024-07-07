@@ -24,7 +24,7 @@ const AuthorPage = () => {
       const fetchBlogs = async () => {
         try {
           const userResponse = await axios.get(
-            `{api}/user/${authorId}`,
+            `${api}/user/${authorId}`,
 
             {
               headers: {

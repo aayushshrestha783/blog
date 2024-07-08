@@ -10,6 +10,11 @@ const ProfileBlogCard = ({ card, onDelete }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const token = Cookies.get("token");
   const navigate = useNavigate();
+  const thumbnailSrc =
+    card.thumbnail && card.thumbnail.regular
+      ? card.thumbnail.regular
+      : `${process.env.PUBLIC_URL}/blog.png`;
+
   if (!token) {
     navigate("/unauthorized");
     return;
@@ -36,7 +41,7 @@ const ProfileBlogCard = ({ card, onDelete }) => {
         alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
         height="200"
-        src={card.thumbnail.regular}
+        src={thumbnailSrc}
         width="300"
       />
       <div className="p-4 flex-grow">

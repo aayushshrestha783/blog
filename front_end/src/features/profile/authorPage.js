@@ -60,7 +60,13 @@ const AuthorPage = () => {
         {/* Profile Section */}
         <div className="space-y-6">
           <div className="flex items-center gap-4">
-            <div className="h-20 w-20 rounded-full bg-gray-300"></div>
+            <div className="h-20 w-20 rounded-full bg-gray-300">
+              <img
+                className="h-20 w-20 rounded-full object-cover"
+                src={`${process.env.PUBLIC_URL}/author_avatar.png`}
+                alt="User Avatar"
+              />
+            </div>
             <div className="space-y-1">
               <h2 className="text-2xl font-bold">
                 {user ? user.name : "Loading..."}

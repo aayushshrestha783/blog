@@ -3,6 +3,7 @@ import axios from "axios";
 import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
 const api = process.env.REACT_APP_API;
 
 function PostBlog() {
@@ -15,10 +16,25 @@ function PostBlog() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [failedMessage, setFailedMessage] = useState("");
-
   const { userID } = useUserId();
   const token = Cookies.get("token");
   const navigate = useNavigate();
+  const [categories, setCategories] = useState([]);
+  const [allCategories, setAllCategories] = useState([
+    "Back End",
+    "Books",
+    "Data Engineering",
+    "Data Analysis",
+    "Design",
+    "Database",
+    "Front End",
+    "Literature",
+    "Machine Learning",
+    "Movies",
+    "Philosophy",
+    "Technology",
+    "Web Development",
+  ]);
 
   useEffect(() => {
     if (!token) {
@@ -35,11 +51,16 @@ function PostBlog() {
     setMarkdownFile(e.target.files[0]);
     setMarkdownMessage(`${e.target.files[0].name} uploaded successfully`);
   };
+  const handleCategoriesChange = (selectedOptions) => {
+    setCategories(
+      selectedOptions ? selectedOptions.map((option) => option.value) : []
+    );
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || (!content && !markdownFile)) {
+    if (!title || !thumbnail || (!content && !markdownFile)) {
       setError("Please fill in all required fields");
       return;
     }
@@ -49,6 +70,8 @@ function PostBlog() {
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
     formData.append("author", userID);
+    formData.append("category", JSON.stringify(categories));
+
     if (markdownFile) {
       formData.append("markdownFile", markdownFile);
     }
@@ -212,6 +235,29 @@ function PostBlog() {
                   )}
                 </div>
               </div>
+            </div>
+            <div>
+              <label
+                className="block text-sm font-medium text-gray-700"
+                htmlFor="categories"
+              >
+                Categories
+              </label>
+              <Select
+                isMulti
+                name="categories"
+                options={allCategories.map((category) => ({
+                  label: category,
+                  value: category,
+                }))}
+                value={categories.map((category) => ({
+                  label: category,
+                  value: category,
+                }))}
+                onChange={handleCategoriesChange}
+                closeMenuOnSelect={false}
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50"
+              />
             </div>
             <div className="flex justify-end">
               <button

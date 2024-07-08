@@ -4,13 +4,20 @@ import { EyeIcon } from "../../components/Icons";
 import { Link } from "react-router-dom";
 
 const BlogCard = ({ card }) => {
+  const thumbnailSrc =
+    card.thumbnail && card.thumbnail.regular
+      ? card.thumbnail.regular
+      : `${process.env.PUBLIC_URL}/blog.png`;
+
+  const avatarSrc =
+    card.authorAvatar || `${process.env.PUBLIC_URL}/author_avatar.png`;
   return (
     <div className="group rounded-lg border transition-all hover:bg-blue-50 bg-gray-100 shadow-lg dark:border-gray-200 dark:hover:bg-gray-250">
       <img
         alt=""
         className="aspect-[3/2] w-full rounded-t-lg object-cover"
         height="200"
-        src={card.thumbnail.regular}
+        src={thumbnailSrc}
         width="300"
         loading="lazy"
       />
@@ -24,7 +31,7 @@ const BlogCard = ({ card }) => {
               alt="Author Avatar"
               className="h-6 w-6 rounded-full"
               height={24}
-              src={card.authorAvatar}
+              src={avatarSrc}
               style={{
                 aspectRatio: "24/24",
                 objectFit: "cover",

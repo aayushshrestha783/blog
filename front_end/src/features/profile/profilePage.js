@@ -13,7 +13,6 @@ const ProfilePage = () => {
   const { userID } = useUserId();
   const token = Cookies.get("token");
   const navigate = useNavigate();
-
   useEffect(() => {
     if (!token) {
       navigate("/unauthorized");
@@ -58,7 +57,9 @@ const ProfilePage = () => {
             <div className="flex items-center gap-4">
               <img
                 className="h-20 w-20 rounded-full object-cover"
-                src={user?.avatar || "/default-avatar.png"}
+                src={
+                  user?.avatar || `${process.env.PUBLIC_URL}/author_avatar.png`
+                }
                 alt="User Avatar"
               />
               <div className="space-y-1">

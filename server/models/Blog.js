@@ -35,6 +35,25 @@ const postSchema = new Schema({
   authorAvatar: {
     type: String,
   },
+  category: {
+    type: [String],
+    enum: [
+      "Back End",
+      "Books",
+      "Data Engineering",
+      "Data Analysis",
+      "Design",
+      "Database",
+      "Front End",
+      "Literature",
+      "Machine Learning",
+      "Movies",
+      "Philosophy",
+      "Technology",
+      "Web Development",
+    ],
+    required: false,
+  },
 });
 
 const Post = mongoose.model("Post", postSchema);

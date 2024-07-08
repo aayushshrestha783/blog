@@ -16,19 +16,18 @@ function EditBlog() {
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([
+    "Web Development",
+    "Front End",
     "Back End",
-    "Books",
     "Data Engineering",
     "Data Analysis",
     "Design",
-    "Database",
-    "Front End",
-    "Literature",
     "Machine Learning",
-    "Movies",
-    "Philosophy",
     "Technology",
-    "Web Development",
+    "Movies",
+    "Books",
+    "Philosophy",
+    "Literature",
   ]);
   const [error, setError] = useState("");
   const token = Cookies.get("token");
@@ -98,7 +97,7 @@ function EditBlog() {
     formData.append("thumbnail", thumbnail);
     formData.append("content", content);
     formData.append("author", userID);
-    formData.append("category", JSON.stringify(categories));
+    formData.append("category", JSON.stringify(categories)); // Add categories
     if (markdownFile) {
       formData.append("markdownFile", markdownFile);
     }
@@ -279,7 +278,7 @@ function EditBlog() {
                 value: category,
               }))}
               onChange={handleCategoriesChange}
-              closeMenuOnSelect={false}
+              closeMenuOnSelect={false} // Prevents the dropdown from closing after each selection
               className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50"
             />
           </div>

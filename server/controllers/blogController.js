@@ -57,14 +57,17 @@ const getBlog = async (req, res) => {
   try {
     const user_id = req.params.userID;
     const page = parseInt(req.query.page) || 1;
+    const category = req.query.category ? JSON.parse(req.query.category) : [];
     const limit = 9;
     const skip = (page - 1) * limit;
 
-    const blogs = await Blog.find()
+    const filter = category.length > 0 ? { category: { $in: category } } : {};
+
+    const blogs = await Blog.find(filter)
       .populate("author", "name")
       .skip(skip)
       .limit(limit);
-    const totalBlogs = await Blog.countDocuments();
+    const totalBlogs = await Blog.countDocuments(filter);
 
     const blogsWithLikeStatus = blogs.map((blog) => {
       const isLiked = blog.likedBy.includes(user_id);

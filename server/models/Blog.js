@@ -38,6 +38,9 @@ const postSchema = new Schema({
   category: {
     type: [String],
     enum: [
+      "Anime",
+      "Art",
+      "Artist",
       "Back End",
       "Books",
       "Data Engineering",
@@ -45,14 +48,19 @@ const postSchema = new Schema({
       "Design",
       "Database",
       "Front End",
+      "History",
       "Literature",
       "Machine Learning",
       "Movies",
       "Philosophy",
+      "Science",
+      "Sports",
       "Technology",
+      "Travel",
       "Web Development",
+      "Other",
     ],
-    required: false,
+    required: true,
   },
 });
 

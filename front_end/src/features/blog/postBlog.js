@@ -21,6 +21,9 @@ function PostBlog() {
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [allCategories, setAllCategories] = useState([
+    "Anime",
+    "Art",
+    "Artist",
     "Back End",
     "Books",
     "Data Engineering",
@@ -28,12 +31,17 @@ function PostBlog() {
     "Design",
     "Database",
     "Front End",
+    "History",
     "Literature",
     "Machine Learning",
     "Movies",
     "Philosophy",
+    "Science",
+    "Sports",
     "Technology",
+    "Travel",
     "Web Development",
+    "Other",
   ]);
 
   useEffect(() => {

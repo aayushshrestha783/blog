@@ -15,7 +15,10 @@ function EditBlog() {
   const [thumbnailMessage, setThumbnailMessage] = useState("");
   const [markdownMessage, setMarkdownMessage] = useState("");
   const [categories, setCategories] = useState([]);
-  const [allCategories, setAllCategories] = useState([
+  const [allCategories] = useState([
+    "Anime",
+    "Art",
+    "Artist",
     "Back End",
     "Books",
     "Data Engineering",
@@ -23,12 +26,17 @@ function EditBlog() {
     "Design",
     "Database",
     "Front End",
+    "History",
     "Literature",
     "Machine Learning",
     "Movies",
     "Philosophy",
+    "Science",
+    "Sports",
     "Technology",
+    "Travel",
     "Web Development",
+    "Other",
   ]);
   const [error, setError] = useState("");
   const token = Cookies.get("token");

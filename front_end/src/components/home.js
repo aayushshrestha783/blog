@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import BlogCard from "../features/blog/blogCard";
 import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { SearchIcon } from "../components/Icons";
 import axios from "axios";
-import Cookies from "js-cookie";
 import Select from "react-select";
 import Pagination from "./Pagination";
 
@@ -14,11 +12,12 @@ const Home = () => {
   const { userID } = useUserId();
   const navigate = useNavigate();
   const api = process.env.REACT_APP_API;
-  const token = Cookies.get("token");
   const [page, setPage] = useState(1); // Page state for pagination
   const [totalPages, setTotalPages] = useState(1); // Total pages state
-
-  const [allCategories, setAllCategories] = useState([
+  const [allCategories] = useState([
+    "Anime",
+    "Art",
+    "Artist",
     "Back End",
     "Books",
     "Data Engineering",
@@ -26,24 +25,29 @@ const Home = () => {
     "Design",
     "Database",
     "Front End",
+    "History",
     "Literature",
     "Machine Learning",
     "Movies",
     "Philosophy",
+    "Science",
+    "Sports",
     "Technology",
+    "Travel",
     "Web Development",
+    "Other",
   ]);
 
   useEffect(() => {
-    if (!token) {
-      navigate("/unauthorized");
-      return;
-    }
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(
-          `${api}/blog/home/${userID}?page=${page}`
-        );
+        const params = {
+          page: page,
+          category: JSON.stringify(categories),
+        };
+        const response = await axios.get(`${api}/blog/home/${userID}`, {
+          params,
+        });
         setBlogs(response.data.blog);
         setTotalPages(Math.ceil(response.data.totalBlogs / 9)); // Calculate total pages
       } catch (error) {
@@ -54,7 +58,7 @@ const Home = () => {
     if (userID) {
       fetchBlogs();
     }
-  }, [userID, navigate, token, page]); // Add page to the dependency array
+  }, [userID, navigate, page, categories]); // Add categories to the dependency array
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -79,6 +83,7 @@ const Home = () => {
               {/* Added flex items-center */}
               <Select
                 isMulti
+                placeholder="Filter"
                 name="categories"
                 options={allCategories.map((category) => ({
                   label: category,
@@ -94,9 +99,6 @@ const Home = () => {
               />
             </div>
           </div>
-          <button className="flex items-center justify-center mt-1">
-            <SearchIcon className="w-5 h-5 text-gray-500" />
-          </button>
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-12">

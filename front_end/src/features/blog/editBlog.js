@@ -66,7 +66,7 @@ function EditBlog() {
         setCategories(response.data.blog.categories || []); // Populate categories
       } catch (error) {
         console.log("error fetching blogs: ", error);
-        navigate("/");
+        navigate("/unauthorized");
       }
     };
     fetchContent();
@@ -140,7 +140,6 @@ function EditBlog() {
         <h1 className="text-3xl font-bold mb-6 text-gray-900">
           Edit Blog Post
         </h1>
-        {error && <div className="text-red-500">{error}</div>}
         {successMessage && (
           <div className="text-green-500">{successMessage}</div>
         )}

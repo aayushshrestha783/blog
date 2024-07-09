@@ -20,7 +20,7 @@ function PostBlog() {
   const token = Cookies.get("token");
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
-  const [allCategories, setAllCategories] = useState([
+  const [allCategories] = useState([
     "Anime",
     "Art",
     "Artist",
@@ -114,7 +114,6 @@ function PostBlog() {
           <h1 className="text-3xl font-bold mb-6 text-gray-900">
             Create New Blog Post
           </h1>
-          {error && <div className="text-red-500">{error}</div>}
           {successMessage && (
             <div className="text-green-500">{successMessage}</div>
           )}

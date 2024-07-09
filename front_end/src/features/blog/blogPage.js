@@ -16,10 +16,6 @@ export default function Component() {
   useEffect(() => {
     const token = Cookies.get("token");
     const fetchContent = async () => {
-      if (!token) {
-        navigate("/unauthorized");
-        return;
-      }
       try {
         const response = await axios.get(`${api}/blog/${blogId}`, {
           headers: {

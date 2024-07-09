@@ -17,7 +17,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 
 const queryClient = new QueryClient();
 
-function App() {
+const App = () => {
   return (
     <UserProvider>
       <QueryClientProvider client={queryClient}>
@@ -49,6 +49,6 @@ function App() {
       </QueryClientProvider>
     </UserProvider>
   );
-}
+};
 
 export default App;

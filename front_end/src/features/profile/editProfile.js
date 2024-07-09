@@ -74,7 +74,6 @@ function EditUser() {
     <div className="bg-gradient-to-br from-green-50 to-blue-20 min-h-screen flex flex-col items-center py-16 px-4 sm:px-6 lg:px-8 min-h-screen bg-gray-50">
       <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-3xl font-bold mb-6 text-gray-900">Edit Profile</h1>
-        {error && <div className="text-red-500 mb-4">{error}</div>}
         {successMessage && (
           <div className="text-green-500">{successMessage}</div>
         )}{" "}

@@ -37,6 +37,7 @@ const ProfilePage = () => {
           setBlogs(response.data.blog);
         } catch (error) {
           console.log("error fetching blogs: ", error);
+          navigate("/unauthorized");
         }
       };
 

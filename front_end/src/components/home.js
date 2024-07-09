@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
 import BlogCard from "../features/blog/blogCard";
 import { useUserId } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +6,17 @@ import { SearchIcon } from "../components/Icons";
 import axios from "axios";
 import Cookies from "js-cookie";
 import Select from "react-select";
+import Pagination from "./Pagination";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [filteredBlogs, setFilteredBlogs] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedCategories, setSelectedCategories] = useState([]);
   const { userID } = useUserId();
   const navigate = useNavigate();
   const api = process.env.REACT_APP_API;
-  const [hasMore, setHasMore] = useState(true);
   const token = Cookies.get("token");
   const [page, setPage] = useState(1); // Page state for pagination
+  const [totalPages, setTotalPages] = useState(1); // Total pages state
 
   const [allCategories, setAllCategories] = useState([
     "Back End",
@@ -36,32 +33,31 @@ const Home = () => {
     "Technology",
     "Web Development",
   ]);
+
   useEffect(() => {
     if (!token) {
       navigate("/unauthorized");
       return;
     }
-    const fetchInitialBlogs = async () => {
+    const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`${api}/blog/home/${userID}?page=1`);
+        const response = await axios.get(
+          `${api}/blog/home/${userID}?page=${page}`
+        );
         setBlogs(response.data.blog);
-        setFilteredBlogs(response.data.blog);
-        setPage(2); // Next page to load
-        if (response.data.blog.length < 9) {
-          setHasMore(false);
-        }
+        setTotalPages(Math.ceil(response.data.totalBlogs / 9)); // Calculate total pages
       } catch (error) {
         console.log("error fetching blogs: ", error);
       }
     };
 
     if (userID) {
-      fetchInitialBlogs();
+      fetchBlogs();
     }
-  }, [userID, navigate, token]);
+  }, [userID, navigate, token, page]); // Add page to the dependency array
 
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
   };
 
   const handleCategoriesChange = (selectedOptions) => {
@@ -108,6 +104,11 @@ const Home = () => {
             <BlogCard key={blog._id} card={blog} />
           ))}
         </div>
+        <Pagination
+          totalPages={totalPages}
+          currentPage={page}
+          onPageChange={handlePageChange}
+        />
       </div>
     </div>
   );

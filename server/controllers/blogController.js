@@ -64,13 +64,18 @@ const getBlog = async (req, res) => {
       .populate("author", "name")
       .skip(skip)
       .limit(limit);
+    const totalBlogs = await Blog.countDocuments();
 
     const blogsWithLikeStatus = blogs.map((blog) => {
       const isLiked = blog.likedBy.includes(user_id);
       return { ...blog.toObject(), isLiked };
     });
 
-    res.status(201).json({ success: true, blog: blogsWithLikeStatus });
+    res.status(201).json({
+      success: true,
+      blog: blogsWithLikeStatus,
+      totalBlogs: totalBlogs,
+    });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

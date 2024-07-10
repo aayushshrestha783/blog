@@ -4,6 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import axios from "axios";
 import { useUserId } from "../components/AuthContext";
 import { useMutation, useQueryClient } from "react-query";
+import Cookies from "js-cookie";
 
 const api = process.env.REACT_APP_API;
 
@@ -11,13 +12,18 @@ function LikeButton({ isLiked, blogID }) {
   const { userID } = useUserId();
   const [liked, setLiked] = useState(isLiked);
   const queryClient = useQueryClient();
-
+  const token = Cookies.get("token");
+  console.warn(userID);
   const mutation = useMutation(
     () =>
       axios.post(
         `${api}/blog/${blogID}/${userID}`,
         {},
-        { withCredentials: true }
+        {
+          headers: {
+            Authorization: `${token}`,
+          },
+        }
       ),
     {
       onMutate: () => {

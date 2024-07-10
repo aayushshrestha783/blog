@@ -12,6 +12,7 @@ import PostBlog from "./features/blog/postBlog";
 import EditBlog from "./features/blog/editBlog";
 import EditUser from "./features/profile/editProfile";
 import Unauthorized from "./components/Unauthorized";
+import About from "./features/About_me/About_Me";
 import { UserProvider } from "./components/AuthContext";
 import { QueryClient, QueryClientProvider } from "react-query";
 
@@ -36,6 +37,7 @@ const App = () => {
             />
             <Route element={<Layout />}>
               <Route path="/home" element={<Home />} />
+              <Route path="/portfolio" element={<About />} />
               <Route path="/blog/:blogId" element={<BlogPage />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/blog/author/:authorId" element={<AuthorPage />} />

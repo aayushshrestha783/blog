@@ -68,7 +68,7 @@ function PostBlog() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!title || !thumbnail || (!content && !markdownFile)) {
+    if (!title || !thumbnail || categories || (!content && !markdownFile)) {
       setError("Please fill in all required fields");
       return;
     }
@@ -99,11 +99,9 @@ function PostBlog() {
         }, 1000); // Navigate to profile after 1 second
       } else {
         setFailedMessage("Post failed!!");
-        setError(response.data.error || "An error occurred");
       }
     } catch (error) {
       setFailedMessage("Post failed!!");
-      setError(error.message || "An error occurred");
     }
   };
 
@@ -114,6 +112,7 @@ function PostBlog() {
           <h1 className="text-3xl font-bold mb-6 text-gray-900">
             Create New Blog Post
           </h1>
+          {error && <div className="text-red-500">{error}</div>}
           {successMessage && (
             <div className="text-green-500">{successMessage}</div>
           )}

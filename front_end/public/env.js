@@ -70,5 +70,8 @@ window.env = {
   "COLORTERM": "truecolor",
   "REACT_APP_API": "http://localhost:3000",
   "REACT_APP_SECRET": "http://localhost:3000",
-  "REACT_APP_ENCRYPTION_KEY": "thisisa16charkey!"
+  "REACT_APP_ENCRYPTION_KEY": "thisisa16charkey!",
+  "REACT_APP_SERVICEID": "service_5y9gpog",
+  "REACT_APP_USERID": "IlkNMbtAyN83u6jV2",
+  "REACT_APP_TEMPLATEID": "template_6unu46l"
 };

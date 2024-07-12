@@ -8,7 +8,7 @@ export default function Profile() {
 
 `;
   return (
-    <div className="flex flex-col min-h-[100vh]">
+    <div className="bg-gradient-to-br from-green-50 to-blue-50 flex flex-col min-h-[100vh]">
       <header className="bg-primary text-primary-foreground py-12 md:py-20">
         <div className="container mx-auto px-4 md:px-6 flex flex-col items-center text-center">
           <div className="rounded-full w-32 h-32 md:w-40 md:h-40 overflow-hidden">

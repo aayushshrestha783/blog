@@ -95,7 +95,7 @@ export default function ContactForm() {
           </div>
           <button
             type="submit"
-            className={`bg-stone-500 hover:bg-stone-600 text-white font-bold py-3 px-6 rounded-full w-full text-lg ${
+            className={`bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full w-full text-lg ${
               isSending ? "opacity-50 cursor-not-allowed" : ""
             }`}
             disabled={isSending}

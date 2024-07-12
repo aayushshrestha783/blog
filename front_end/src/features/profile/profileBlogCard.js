@@ -63,13 +63,13 @@ const ProfileBlogCard = ({ card, onDelete }) => {
         <div className="flex justify-between p-6 pt-2">
           <Link
             to={`/editBlog/${card._id}`}
-            className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md"
+            className="px-4 py-2 border border-gray-500 text-gray-500 rounded-md sm:px-2 sm:py-1"
           >
             Edit
           </Link>
           <button
             onClick={() => setIsModalOpen(true)}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md"
+            className="px-4 py-2 bg-red-600 text-white rounded-md sm:px-2 sm:py-1"
           >
             Delete
           </button>

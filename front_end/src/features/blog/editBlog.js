@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import { useUserId } from "../../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { marked } from "marked";
+import ToggleSwitch from "../../components/ToggleSwitch";
 
 function EditBlog() {
   const { userID } = useUserId();
@@ -46,6 +48,7 @@ function EditBlog() {
   const api = process.env.REACT_APP_API;
   const [successMessage, setSuccessMessage] = useState("");
   const [failedMessage, setFailedMessage] = useState("");
+  const [isMarkdownMode, setIsMarkdownMode] = useState(true);
 
   useEffect(() => {
     if (!token) {
@@ -92,7 +95,9 @@ function EditBlog() {
       selectedOptions ? selectedOptions.map((option) => option.value) : []
     );
   };
-
+  const handleToggle = () => {
+    setIsMarkdownMode(!isMarkdownMode);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -101,18 +106,17 @@ function EditBlog() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("thumbnail", thumbnail);
-    formData.append("content", content);
-    formData.append("author", userID);
-    formData.append("category", JSON.stringify(categories));
-    if (markdownFile) {
-      formData.append("markdownFile", markdownFile);
-    }
+    const blogData = {
+      title,
+      thumbnail,
+      content,
+      author: userID,
+      category: categories,
+      markdownFile,
+    };
 
     try {
-      const response = await axios.put(`${api}/blog/${blogId}`, formData, {
+      const response = await axios.put(`${api}/blog/${blogId}`, blogData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token}`,
@@ -143,7 +147,7 @@ function EditBlog() {
           <div className="text-green-500">{successMessage}</div>
         )}
         {failedMessage && <div className="text-red-500">{failedMessage}</div>}
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <div className="space-y-6">
           <div>
             <label
               className="block text-sm font-medium text-gray-700"
@@ -205,20 +209,33 @@ function EditBlog() {
               </div>
             </div>
           </div>
-          <div>
+          <div className="relative">
             <label
               className="block text-sm font-medium text-gray-700"
               htmlFor="content"
             >
               Content
             </label>
-            <textarea
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
-              id="content"
-              rows={10}
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+            <ToggleSwitch
+              isMarkdownMode={isMarkdownMode}
+              onToggle={handleToggle}
             />
+            {isMarkdownMode ? (
+              <textarea
+                className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2"
+                id="content"
+                placeholder="Write your blog post content here"
+                rows={10}
+                value={content}
+                onChange={(e) => setContent(e.target.value)}
+              />
+            ) : (
+              <div
+                className="mt-1 block w-full h-48 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2 p-4"
+                id="content"
+                dangerouslySetInnerHTML={{ __html: marked(content) }}
+              />
+            )}
           </div>
           <div>
             <label
@@ -292,12 +309,12 @@ function EditBlog() {
           <div className="flex justify-end">
             <button
               className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              type="submit"
+              onClick={handleSubmit}
             >
               Update
             </button>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );

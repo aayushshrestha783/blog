@@ -27,19 +27,20 @@ const Header = () => {
       }
     } catch (error) {
       console.warn("Error while Logout: ", error);
+      navigate("/");
     } finally {
       setIsModalOpen(false);
     }
   };
 
   return (
-    <header className="bg-gray-800 py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+    <header class="bg-gray-800 py-4 px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
       <div className="flex items-center">
         <Link to="/home" className="text-white hover:text-gray-200">
           <img
             src={`${process.env.PUBLIC_URL}/Talk_logo_1.png`} // Use absolute path
             alt="Logo"
-            className="h-custom sm:h-10 md:h-14 object-cover mr-4"
+            className="h-10 w-auto object-contain sm:h-10 md:h-14"
           />
         </Link>
       </div>

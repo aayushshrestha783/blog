@@ -10,7 +10,6 @@ const createBlog = async (req, res) => {
     let category = req.body.category;
     let content;
     let thumbnail;
-
     if (req.files && req.files.markdownFile) {
       // If a file has been uploaded, read its content
 
@@ -171,6 +170,7 @@ const updateBlog = async (req, res) => {
     const blog_id = req.params.blogID;
     const { title, user } = req.body;
     let category = req.body.category;
+    console.log(category);
     let content;
     let blog = await Blog.findById(blog_id).exec();
     if (!blog) {
@@ -191,7 +191,6 @@ const updateBlog = async (req, res) => {
     if (typeof category === "string") {
       category = JSON.parse(category);
     }
-    console.log(category);
     blog.title = title;
     blog.user = user;
     blog.content = content;

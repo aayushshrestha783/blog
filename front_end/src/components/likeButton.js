@@ -13,7 +13,6 @@ function LikeButton({ isLiked, blogID }) {
   const [liked, setLiked] = useState(isLiked);
   const queryClient = useQueryClient();
   const token = Cookies.get("token");
-  console.warn(userID);
   const mutation = useMutation(
     () =>
       axios.post(

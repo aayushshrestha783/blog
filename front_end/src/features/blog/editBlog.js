@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useUserId } from "../../components/AuthContext";
-import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { marked } from "marked";
+import Markdown from "react-markdown";
 import ToggleSwitch from "../../components/ToggleSwitch";
 
 function EditBlog() {
@@ -59,14 +58,13 @@ function EditBlog() {
       try {
         const response = await axios.get(`${api}/blog/${blogId}`, {
           headers: {
-            "Content-Type": "multipart/form-data",
             Authorization: `${token}`,
           },
         });
         setBlog(response.data.blog);
         setTitle(response.data.blog.title);
         setContent(response.data.blog.content);
-        setCategories(response.data.blog.categories || []); // Populate categories
+        setCategories(response.data.blog.category);
       } catch (error) {
         console.log("error fetching blogs: ", error);
         navigate("/unauthorized");
@@ -86,7 +84,6 @@ function EditBlog() {
 
   const handleMarkdownFileChange = (e) => {
     setMarkdownFile(e.target.files[0]);
-    console.log(markdownFile);
     setMarkdownMessage(`${e.target.files[0].name} uploaded successfully`);
   };
 
@@ -95,9 +92,11 @@ function EditBlog() {
       selectedOptions ? selectedOptions.map((option) => option.value) : []
     );
   };
+
   const handleToggle = () => {
     setIsMarkdownMode(!isMarkdownMode);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -106,17 +105,20 @@ function EditBlog() {
       return;
     }
 
-    const blogData = {
-      title,
-      thumbnail,
-      content,
-      author: userID,
-      category: categories,
-      markdownFile,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    if (thumbnail) {
+      formData.append("thumbnail", thumbnail);
+    }
+    formData.append("content", content);
+    formData.append("author", userID);
+    formData.append("category", JSON.stringify(categories));
+    if (markdownFile) {
+      formData.append("markdownFile", markdownFile);
+    }
 
     try {
-      const response = await axios.put(`${api}/blog/${blogId}`, blogData, {
+      const response = await axios.put(`${api}/blog/${blogId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `${token}`,
@@ -230,10 +232,10 @@ function EditBlog() {
                 onChange={(e) => setContent(e.target.value)}
               />
             ) : (
-              <div
-                className="mt-1 block w-full h-48 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2 p-4"
+              <Markdown
+                className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2 p-4 h-[200px] overflow-y-auto`} // Use Tailwind classes
                 id="content"
-                dangerouslySetInnerHTML={{ __html: marked(content) }}
+                children={content}
               />
             )}
           </div>

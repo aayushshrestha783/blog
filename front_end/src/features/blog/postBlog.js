@@ -4,7 +4,7 @@ import { useUserId } from "../../components/AuthContext";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
-import { marked } from "marked";
+import Markdown from "react-markdown";
 import ToggleSwitch from "../../components/ToggleSwitch";
 
 const api = process.env.REACT_APP_API;
@@ -87,19 +87,23 @@ function PostBlog() {
       return;
     }
 
-    const blogData = {
-      title,
-      thumbnail,
-      content,
-      author: userID,
-      category: categories,
-      markdownFile,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("thumbnail", thumbnail);
+    formData.append("author", userID);
+    formData.append("category", JSON.stringify(categories));
+    if (content) {
+      formData.append("content", content);
+    }
+    if (markdownFile) {
+      formData.append("markdownFile", markdownFile);
+    }
 
     try {
-      const response = await axios.post(`${api}/blog`, blogData, {
+      const response = await axios.post(`${api}/blog`, formData, {
         headers: {
           Authorization: `${token}`,
+          "Content-Type": "multipart/form-data",
         },
       });
 
@@ -213,10 +217,10 @@ function PostBlog() {
                   onChange={(e) => setContent(e.target.value)}
                 />
               ) : (
-                <div
-                  className="mt-1 block w-full h-48 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2 p-4"
+                <Markdown
+                  className={`mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm bg-gray-50 pl-2 p-4 h-[200px] overflow-y-auto`} // Use Tailwind classes
                   id="content"
-                  dangerouslySetInnerHTML={{ __html: marked(content) }}
+                  children={content}
                 />
               )}
             </div>
